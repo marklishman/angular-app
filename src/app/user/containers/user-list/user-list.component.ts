@@ -5,6 +5,7 @@ import { debounceTime, map } from 'rxjs/operators';
 
 import { User } from '../../../model/user';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -15,7 +16,8 @@ export class UserListComponent implements OnInit {
   users$: Observable<User[]>;
   search = new FormControl();
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private router: Router) { }
 
   ngOnInit() {
     this.users$ = this.userService.getUsers$();
@@ -33,7 +35,12 @@ export class UserListComponent implements OnInit {
   }
 
   onDelete(id: number): void {
-    console.log('delete');
+    if (confirm('Are you sure?')) {
+      this.userService.deleteUser(id)
+        .subscribe(
+          () => this.router.navigate(['/users'])
+        );
+    }
   }
 
   private applyFilter(searchText: string): void {

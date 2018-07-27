@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
+
 import { User } from '../../../model/user';
 import { UserService } from '../../services/user.service';
-import { FormControl } from '@angular/forms';
-import { debounceTime, map } from 'rxjs/operators';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -24,6 +25,11 @@ export class UserListComponent implements OnInit {
         map(searchText => searchText.trim().toLowerCase())
       )
       .subscribe( searchText => this.applyFilter(searchText));
+  }
+
+  resetSearch(): void {
+    this.search.reset(null, {emitEvent: false});
+    this.applyFilter('');
   }
 
   onDelete(id: number): void {

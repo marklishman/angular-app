@@ -1,10 +1,36 @@
-<div *ngIf="user$ | async as user">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
   <p>
-    Name: {{user.name}}
+    <label>
+      Name:
+      <input type="text" formControlName="name" required>
+    </label>
   </p>
   <p>
-    Username: {{user.username}}
+    <label>
+      Username:
+      <input type="text" formControlName="username" required>
+    </label>
+  </p>
+  <p>
+    <label>
+      Email:
+      <input type="text" formControlName="email" required>
+    </label>
+  </p>
+  <p>
+    <label>
+      Phone:
+      <input type="text" formControlName="phone" required>
+    </label>
+  </p>
+  <p>
+    <label>
+      Website:
+      <input type="text" formControlName="website">
+    </label>
   </p>
 
-  <pre>{{user | json}}</pre>
-</div>
+  <button type="submit" [disabled]="!userForm.valid">Submit</button>
+</form>
+

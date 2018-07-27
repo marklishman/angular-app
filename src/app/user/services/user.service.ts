@@ -9,18 +9,27 @@ import { catchError } from 'rxjs/operators';
 })
 export class UserService {
 
+  private readonly Url = 'https://jsonplaceholder.typicode.com/users';
+
   constructor(private http: HttpClient) {
   }
 
   getUsers$(): Observable<User[]> {
-    return this.http.get<User[]>(`https://jsonplaceholder.typicode.com/users`)
+    return this.http.get<User[]>(this.Url)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   getUser$(userId: number): Observable<User> {
-    return this.http.get<User>(`https://jsonplaceholder.typicode.com/users/` + userId)
+    return this.http.get<User>(`${this.Url}/${userId}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  saveUser(user: User): Observable<User> {
+    return this.http.post<User>(this.Url, user)
       .pipe(
         catchError(this.handleError)
       );

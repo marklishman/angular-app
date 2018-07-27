@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../../../model/user';
 import { UserService } from '../../services/user.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   templateUrl: './user-edit.component.html',
@@ -10,15 +9,46 @@ import { UserService } from '../../services/user.service';
 })
 export class UserEditComponent implements OnInit {
 
-  user$: Observable<User>;
+  userForm = this.formBuilder.group({
+    name: [''],
+    username: [''],
+    email: [''],
+    phone: [''],
+    website: ['']
+  });
 
   constructor(private userService: UserService,
               private router: Router,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
+    const path = this.route.snapshot.routeConfig.path;
+    if (path === 'users/new') {
+      return;
+    }
+
     const userId = +this.route.snapshot.paramMap.get('userId');
-    this.user$ = this.userService.getUser$(userId);
+    this.userService.getUser$(userId)
+      .subscribe(
+        user => {
+          this.userForm.setValue({
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            phone: user.phone,
+            website: user.website
+          });
+        }
+      );
+  }
+
+  onSubmit(): void {
+    this.userService.saveUser(this.userForm.getRawValue())
+      .subscribe(
+        () => this.router.navigate(['/users'])
+      );
   }
 
 }

@@ -8,6 +8,7 @@ import { UserViewComponent } from './user/containers/user-view/user-view.compone
 import { UserEditComponent } from './user/containers/user-edit/user-edit.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user/services/user.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { UserService } from './user/services/user.service';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule
   ],

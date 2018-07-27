@@ -1,4 +1,6 @@
-<a href="/users/new">Add</a>
+<input type="text"
+       [formControl]="search"
+       placeholder="search">
 <ul>
   <li *ngFor="let user of users$ | async">
     <a [routerLink]="['/users', user.id]">{{user.name}}</a> |
@@ -6,4 +8,6 @@
     <a href="javascript:void(0)" (click)="onDelete(user.id);">delete</a>
   </li>
 </ul>
+
+<a href="/users/new">Add</a>
 

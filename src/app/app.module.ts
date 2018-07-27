@@ -2,17 +2,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './main/app.component';
+import { UserListComponent } from './user/containers/user-list/user-list.component';
+import { UserViewComponent } from './user/components/user-view/user-view.component';
+import { UserEditComponent } from './user/components/user-edit/user-edit.component';
+import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './user/services/user.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserListComponent,
+    UserViewComponent,
+    UserEditComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

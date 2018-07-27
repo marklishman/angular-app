@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './main/app.component';
 import { UserListComponent } from './user/containers/user-list/user-list.component';
-import { UserViewComponent } from './user/components/user-view/user-view.component';
-import { UserEditComponent } from './user/components/user-edit/user-edit.component';
+import { UserViewComponent } from './user/containers/user-view/user-view.component';
+import { UserEditComponent } from './user/containers/user-edit/user-edit.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user/services/user.service';
 

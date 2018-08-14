@@ -1,7 +1,7 @@
 
 export class GeoLocation {
   constructor(
-    public readonly lat: number,
-    public readonly lng: number
+    public readonly lat: string,
+    public readonly lng: string
   ) {}
 }

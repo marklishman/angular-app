@@ -1,51 +1,45 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { User } from '../../model/user';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+
+import { UserDto } from './dto/user-dto';
+import { UserHttpService } from './user-http.service';
+import { User } from '../../model/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private readonly Url = 'https://jsonplaceholder.typicode.com/users';
-
-  constructor(private http: HttpClient) {
+  constructor(private userHttpService: UserHttpService) {
   }
 
   getUsers$(): Observable<User[]> {
-    return this.http.get<User[]>(this.Url)
+    return this.userHttpService.getUsers$()
       .pipe(
-        catchError(this.handleError)
+        map(userDto => userDto as User[]),
       );
   }
 
   getUser$(userId: number): Observable<User> {
-    return this.http.get<User>(`${this.Url}/${userId}`)
+    return this.userHttpService.getUser$(userId)
       .pipe(
-        catchError(this.handleError)
+        map(userDto => userDto as User),
       );
   }
 
   saveUser(user: User): Observable<User> {
-    return this.http.post<User>(this.Url, user)
+    return this.userHttpService.saveUser(user as UserDto)
       .pipe(
-        catchError(this.handleError)
+        map(userDto => userDto as User),
       );
   }
 
   deleteUser(userId: number): Observable<User> {
-    return this.http.delete<User>(`${this.Url}/${userId}`)
+    return this.userHttpService.deleteUser(userId)
       .pipe(
-        catchError(this.handleError)
+        map(userDto => userDto as User),
       );
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<any> {
-    if (error.error instanceof ErrorEvent) {
-      return throwError(`An error occurred: ${error.error.message}`);
-    }
-    return throwError(`Server returned code ${error.status}`);
   }
 }

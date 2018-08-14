@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
 import { FormBuilder } from '@angular/forms';
+
+import { UserService } from '../../services/user.service';
 
 @Component({
   templateUrl: './user-edit.component.html',

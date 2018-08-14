@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
-
-import { User } from '../../../model/user';
-import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { UserDto } from '../../services/dto/user-dto';
+import { UserService } from '../../services/user.service';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -13,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class UserListComponent implements OnInit {
 
-  users$: Observable<User[]>;
+  users$: Observable<UserDto[]>;
   search = new FormControl();
 
   constructor(private userService: UserService,

@@ -1,7 +1,6 @@
 import { Address } from './address';
 import { Company } from './company';
 
-// TODO use DTO and client objects?
 export class User {
   constructor(
     public readonly id: number,

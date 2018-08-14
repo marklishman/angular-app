@@ -7,8 +7,9 @@ import { UserListComponent } from './user/containers/user-list/user-list.compone
 import { UserViewComponent } from './user/containers/user-view/user-view.component';
 import { UserEditComponent } from './user/containers/user-edit/user-edit.component';
 import { HttpClientModule } from '@angular/common/http';
-import { UserService } from './user/services/user.service';
+import { UserHttpService } from './user/services/user-http.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserService } from './user/services/user.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule
   ],
   providers: [
+    UserHttpService,
     UserService
   ],
   bootstrap: [AppComponent]

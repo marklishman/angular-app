@@ -1,0 +1,6 @@
+describe('UserListComponent', () => {
+
+  describe('ngOnInit', () => {
+
+  });
+});

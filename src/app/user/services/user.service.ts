@@ -12,6 +12,8 @@ import { User } from '../../model/user';
 })
 export class UserService {
 
+  // TODO convert DTO to model
+
   constructor(private userHttpService: UserHttpService) {
   }
 

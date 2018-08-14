@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserHttpService } from '../../services/user-http.service';
 import { UserDto } from '../../services/dto/user-dto';
+import { UserService } from '../../services/user.service';
 
 @Component({
   templateUrl: './user-view.component.html',
@@ -12,7 +12,7 @@ export class UserViewComponent implements OnInit {
 
   user$: Observable<UserDto>;
 
-  constructor(private userService: UserHttpService,
+  constructor(private userService: UserService,
               private router: Router,
               private route: ActivatedRoute) {}
 
@@ -20,5 +20,4 @@ export class UserViewComponent implements OnInit {
     const userId = +this.route.snapshot.paramMap.get('userId');
     this.user$ = this.userService.getUser$(userId);
   }
-
 }

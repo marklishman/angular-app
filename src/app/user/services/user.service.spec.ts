@@ -2,7 +2,7 @@ import { UserHttpService } from './user-http.service';
 import createSpyObj = jasmine.createSpyObj;
 import { of } from 'rxjs';
 
-import * as userFixture from '../../testing/fixtures/user-fixture';
+import * as userFixture from '../../testing/data-fixtures/user-data-fixture';
 import { UserService } from './user.service';
 
 describe('UserService', () => {

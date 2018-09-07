@@ -3,10 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import createSpyObj = jasmine.createSpyObj;
 
-import * as userFixture from '../../testing/fixtures/user-fixture';
-import { asyncData } from '../../testing/utils/async-utils';
-import { defer } from 'rxjs/internal/observable/defer';
-import { delay } from 'rxjs/operators';
+import * as userFixture from '../../testing/data-fixtures/user-data-fixture';
 
 describe('UserHttpService', () => {
 
@@ -18,7 +15,7 @@ describe('UserHttpService', () => {
     beforeEach(() => {
 
       httpClient = createSpyObj<HttpClient>({
-        'get': of(userFixture.users)
+        'get': of(userFixture.userDtos)
       });
 
       userHttpService = new UserHttpService(httpClient);
@@ -28,55 +25,9 @@ describe('UserHttpService', () => {
       userHttpService.getUsers$()
         .subscribe(
           actual => {
-            expect(actual).toBe(userFixture.users);
+            expect(actual).toBe(userFixture.userDtos);
           }
         );
-    });
-  });
-
-  describe('getUsers$ asynchronously', () => {
-
-    beforeEach(() => {
-
-      httpClient = createSpyObj<HttpClient>({
-        'get': asyncData(userFixture.users)
-      });
-
-      /* even including a delay such as this
-        return defer(() => Promise.resolve(data))
-          .pipe(
-            delay(3000)
-          );
-       */
-
-      userHttpService = new UserHttpService(httpClient);
-    });
-
-    it('should be non-deterministic', () => {
-      userHttpService.getUsers$()
-        .subscribe(
-          actual => {
-            expect(actual).toBe(userFixture.users);
-          }
-        );
-    });
-
-    // Technically it is still non-deterministic
-    // (in the unlikely event that it took longer than 5 seconds)
-    it('should be deterministic', (done: DoneFn) => {
-      userHttpService.getUsers$()
-        .subscribe(
-          actual => {
-            expect(actual).toBe(userFixture.users);
-            done();
-          }
-        );
-        /* even including a delay in asyncData such as this
-          return defer(() => Promise.resolve(data))
-            .pipe(
-              delay(3000)
-            );
-         */
     });
   });
 

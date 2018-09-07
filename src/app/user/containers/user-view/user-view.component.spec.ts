@@ -7,7 +7,7 @@ import createSpyObj = jasmine.createSpyObj;
 
 import { UserService } from '../../services/user.service';
 import { UserViewComponent } from './user-view.component';
-import * as userFixture from '../../../testing/fixtures/user-fixture';
+import * as userFixture from '../../../testing/data-fixtures/user-data-fixture';
 
 describe('UserViewComponent', () => {
 

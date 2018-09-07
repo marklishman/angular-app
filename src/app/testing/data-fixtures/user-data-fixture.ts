@@ -1,10 +1,12 @@
-import { User } from '../../model/user';
 import { Address } from '../../model/address';
 import { Company } from '../../model/company';
 import { GeoLocation } from '../../model/geo-location';
+import { UserDto } from '../../user/services/dto/user-dto';
+import { User } from '../../model/user';
 
-export const users: User[] = [
-  {
+// UserDto
+
+export const firstUserDto: UserDto = {
     'id': 1,
     'name': 'Leanne Graham',
     'username': 'Bret',
@@ -26,8 +28,9 @@ export const users: User[] = [
       'catchPhrase': 'Multi-layered client-server neural-net',
       'bs': 'harness real-time e-markets'
     }
-  },
-  {
+  };
+
+export const secondUserDto: UserDto = {
     'id': 2,
     'name': 'Ervin Howell',
     'username': 'Antonette',
@@ -49,8 +52,14 @@ export const users: User[] = [
       'catchPhrase': 'Proactive didactic contingency',
       'bs': 'synergize scalable supply-chains'
     }
-  },
+  };
+
+export const userDtos: UserDto[] = [
+  firstUserDto,
+  secondUserDto
 ];
+
+// User
 
 export const firstUser = new User(
   1,
@@ -75,3 +84,32 @@ export const firstUser = new User(
   'harness real-time e-markets'
   )
 );
+
+export const secondUser: User = new User(
+  2,
+  'Ervin Howell',
+  'Antonette',
+  'Shanna@melissa.tv',
+  new Address (
+    'Victor Plains',
+    'Suite 879',
+    'Wisokyburgh',
+    '90566-7771',
+    new GeoLocation (
+      '-43.9509',
+      '-34.4618'
+    )
+  ),
+  '010-692-6593 x09125',
+  'anastasia.net',
+  new Company(
+    'Deckow-Crist',
+    'Proactive didactic contingency',
+    'synergize scalable supply-chains'
+  )
+);
+
+export const users: User[] = [
+  firstUser,
+  secondUser
+];

@@ -1,13 +1,13 @@
-import { UserViewComponent } from './user-view.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import createSpyObj = jasmine.createSpyObj;
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { UserService } from '../../services/user.service';
 import { APP_BASE_HREF } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
+import createSpyObj = jasmine.createSpyObj;
 
-import * as userFixture from '../../../testing/user-fixture';
+import { UserService } from '../../services/user.service';
+import { UserViewComponent } from './user-view.component';
+import * as userFixture from '../../../testing/fixtures/user-fixture';
 
 describe('UserViewComponent', () => {
 
@@ -60,6 +60,8 @@ describe('UserViewComponent', () => {
     it('should get the user for the specified id', () => {
       expect(userService.getUser$).toHaveBeenCalledWith(USER_ID);
     });
-
   });
+
+  // TODO check the values on the page
+
 });

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserDto } from '../../services/dto/user-dto';
 import { UserService } from '../../services/user.service';
@@ -23,6 +23,7 @@ export class UserListComponent implements OnInit {
     this.search.valueChanges
       .pipe(
         debounceTime(500),
+        distinctUntilChanged(),
         map(searchText => searchText.trim().toLowerCase())
       )
       .subscribe( searchText => this.applyFilter(searchText));

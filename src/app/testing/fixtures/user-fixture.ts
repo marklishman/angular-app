@@ -1,7 +1,7 @@
-import { User } from '../model/user';
-import { Address } from '../model/address';
-import { Company } from '../model/company';
-import { GeoLocation } from '../model/geo-location';
+import { User } from '../../model/user';
+import { Address } from '../../model/address';
+import { Company } from '../../model/company';
+import { GeoLocation } from '../../model/geo-location';
 
 export const users: User[] = [
   {

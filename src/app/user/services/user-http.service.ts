@@ -15,7 +15,8 @@ export class UserHttpService {
   constructor(private http: HttpClient) {
   }
 
-  getUsers$(): Observable<UserDto[]> {
+  // TODO collection request object
+  getUserList$(): Observable<UserDto[]> {
     return this.http.get<UserDto[]>(this.Url)
       .pipe(
         catchError(this.handleError)

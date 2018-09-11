@@ -10,19 +10,19 @@ describe('UserService', () => {
   let userService: UserService;
   let userHttpService: UserHttpService;
 
-  describe('getUsers$', () => {
+  describe('getUserList$', () => {
 
     beforeEach(() => {
 
       userHttpService = createSpyObj<UserHttpService>({
-        'getUsers$': of(userFixture.users)
+        'getUserList$': of(userFixture.users)
       });
 
       userService = new UserService(userHttpService);
     });
 
     it('should get a list of users', () => {
-      userService.getUsers$()
+      userService.getUserList$()
         .subscribe(
           actual => expect(actual).toBe(userFixture.users)
         );

@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.users$ = this.userService.getUsers$();
+    this.users$ = this.userService.getUserList$();
     this.search.valueChanges
       .pipe(
         debounceTime(500),
@@ -44,7 +44,7 @@ export class UserListComponent implements OnInit {
   }
 
   private applyFilter(searchText: string): void {
-    this.users$ = this.userService.getUsers$()
+    this.users$ = this.userService.getUserList$()
       .pipe(
         map(users => users.filter(
           user => user.name.toLowerCase().includes(searchText.toLowerCase())

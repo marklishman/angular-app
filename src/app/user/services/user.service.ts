@@ -16,8 +16,8 @@ export class UserService {
   constructor(private userHttpService: UserHttpService) {
   }
 
-  getUsers$(): Observable<User[]> {
-    return this.userHttpService.getUsers$()
+  getUserList$(): Observable<User[]> {
+    return this.userHttpService.getUserList$()
       .pipe(
         map(userDto => userDto as User[]),
       );

@@ -1,16 +1,23 @@
 import { UserHttpService } from './user-http.service';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
-import createSpyObj = jasmine.createSpyObj;
+import { of, throwError } from 'rxjs';
 
 import * as userFixture from '../../testing/data-fixtures/user-data-fixture';
+import createSpyObj = jasmine.createSpyObj;
+import Spy = jasmine.Spy;
 
 describe('UserHttpService', () => {
 
   let userHttpService: UserHttpService;
   let httpClient: HttpClient;
 
-  describe('getUsers$', () => {
+  const userId = 123;
+
+  const RxPipeFailure = createSpyObj({
+    'pipe': throwError('ERROR')
+  });
+
+  describe('getUserList$', () => {
 
     beforeEach(() => {
 
@@ -22,10 +29,59 @@ describe('UserHttpService', () => {
     });
 
     it('should get a list of users', () => {
-      userHttpService.getUsers$()
+      userHttpService.getUserList$()
         .subscribe(
           actual => {
+            expect(httpClient.get).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users');
             expect(actual).toBe(userFixture.userDtos);
+          }
+        );
+    });
+
+    it('should handle any errors', (done: DoneFn) => {
+      (<Spy>httpClient.get).and.returnValue(RxPipeFailure);
+
+      userHttpService.getUserList$()
+        .subscribe(
+          () => fail('should throw an error'),
+          error => {
+            expect(error).toBe('ERROR');
+            done();
+          }
+        );
+    });
+  });
+
+  describe('getUser$', () => {
+
+    beforeEach(() => {
+
+      httpClient = createSpyObj<HttpClient>({
+        'get': of(userFixture.firstUserDto)
+      });
+
+      userHttpService = new UserHttpService(httpClient);
+    });
+
+    it('should get a user', () => {
+      userHttpService.getUser$(userId)
+        .subscribe(
+          actual => {
+            expect(httpClient.get).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users/123');
+            expect(actual).toBe(userFixture.firstUserDto);
+          }
+        );
+    });
+
+    it('should handle any errors', (done: DoneFn) => {
+      (<Spy>httpClient.get).and.returnValue(RxPipeFailure);
+
+      userHttpService.getUser$(userId)
+        .subscribe(
+          () => fail('should throw an error'),
+          error => {
+            expect(error).toBe('ERROR');
+            done();
           }
         );
     });

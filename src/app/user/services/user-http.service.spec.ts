@@ -5,6 +5,7 @@ import { of, throwError } from 'rxjs';
 import * as userFixture from '../../testing/data-fixtures/user-data-fixture';
 import createSpyObj = jasmine.createSpyObj;
 import Spy = jasmine.Spy;
+import { TestBed } from '@angular/core/testing';
 
 describe('UserHttpService', () => {
 
@@ -17,14 +18,14 @@ describe('UserHttpService', () => {
     'pipe': throwError('ERROR')
   });
 
+  // TODO reduce duplication
+
   describe('getUserList$', () => {
 
     beforeEach(() => {
-
       httpClient = createSpyObj<HttpClient>({
         'get': of(userFixture.userDtos)
       });
-
       userHttpService = new UserHttpService(httpClient);
     });
 
@@ -55,11 +56,9 @@ describe('UserHttpService', () => {
   describe('getUser$', () => {
 
     beforeEach(() => {
-
       httpClient = createSpyObj<HttpClient>({
         'get': of(userFixture.firstUserDto)
       });
-
       userHttpService = new UserHttpService(httpClient);
     });
 
@@ -85,6 +84,30 @@ describe('UserHttpService', () => {
           }
         );
     });
+  });
+
+  describe('Dependency Injection', () => {
+
+    beforeEach(() => {
+      httpClient = createSpyObj<HttpClient>({
+        'get': of(userFixture.firstUserDto)
+      });
+
+      TestBed.configureTestingModule({
+        providers: [
+          UserHttpService,
+          { provide: HttpClient, useValue: httpClient },
+        ]
+      });
+
+    });
+
+    it('should inject the http client into the service', () => {
+      const service: UserHttpService = TestBed.get(UserHttpService);
+      service.getUserList$();
+      expect(httpClient.get).toHaveBeenCalled();
+    });
+
   });
 
 });

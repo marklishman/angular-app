@@ -44,6 +44,7 @@ export class UserHttpService {
       );
   }
 
+  // TODO use AbstractHttpService
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
       return throwError(`An error occurred: ${error.error.message}`);

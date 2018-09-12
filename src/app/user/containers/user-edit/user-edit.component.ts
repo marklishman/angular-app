@@ -46,7 +46,7 @@ export class UserEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.userService.saveUser(this.userForm.getRawValue())
+    this.userService.saveUser$(this.userForm.getRawValue())
       .subscribe(
         () => this.router.navigate(['/users'])
       );

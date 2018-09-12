@@ -11,7 +11,7 @@ import { User } from '../../model/user';
 })
 export class UserService {
 
-  // TODO convert DTO to model
+  // TODO convert DTO to model (rename / reorganise some properties)
 
   constructor(private userHttpService: UserHttpService) {
   }
@@ -30,15 +30,16 @@ export class UserService {
       );
   }
 
-  saveUser(user: User): Observable<User> {
-    return this.userHttpService.saveUser(user as UserDto)
+  // TODO create or update user
+  saveUser$(user: User): Observable<User> {
+    return this.userHttpService.createUser$(user as UserDto)
       .pipe(
         map(userDto => userDto as User),
       );
   }
 
-  deleteUser(userId: number): Observable<User> {
-    return this.userHttpService.deleteUser(userId)
+  deleteUser$(userId: number): Observable<User> {
+    return this.userHttpService.deleteUser$(userId)
       .pipe(
         map(userDto => userDto as User),
       );

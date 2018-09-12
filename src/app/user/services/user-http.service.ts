@@ -15,7 +15,6 @@ export class UserHttpService {
   constructor(private http: HttpClient) {
   }
 
-  // TODO collection request object
   getUserList$(): Observable<UserDto[]> {
     return this.http.get<UserDto[]>(this.Url)
       .pipe(
@@ -30,21 +29,27 @@ export class UserHttpService {
       );
   }
 
-  saveUser(user: UserDto): Observable<UserDto> {
+  createUser$(user: UserDto): Observable<UserDto> {
     return this.http.post<UserDto>(this.Url, user)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  deleteUser(userId: number): Observable<UserDto> {
+  updateUser$(user: UserDto): Observable<UserDto> {
+    return this.http.put<UserDto>(`${this.Url}/${user.id}`, user)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  deleteUser$(userId: number): Observable<UserDto> {
     return this.http.delete<UserDto>(`${this.Url}/${userId}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  // TODO use AbstractHttpService
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
       return throwError(`An error occurred: ${error.error.message}`);

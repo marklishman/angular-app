@@ -36,7 +36,7 @@ export class UserListComponent implements OnInit {
 
   onDelete(id: number): void {
     if (confirm('Are you sure?')) {
-      this.userService.deleteUser(id)
+      this.userService.deleteUser$(id)
         .subscribe(
           () => this.router.navigate(['/users'])
         );

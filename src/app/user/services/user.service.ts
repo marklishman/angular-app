@@ -30,12 +30,8 @@ export class UserService {
       );
   }
 
-  // TODO create or update user
   saveUser$(user: User): Observable<User> {
-    return this.userHttpService.createUser$(user as UserDto)
-      .pipe(
-        map(userDto => userDto as User),
-      );
+    return this.userHttpService.saveUser$(user);
   }
 
   deleteUser$(userId: number): Observable<User> {

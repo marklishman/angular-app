@@ -3,12 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
 import { UserService } from '../../services/user.service';
+import { User } from '../../../model/user';
 
 @Component({
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss']
 })
 export class UserEditComponent implements OnInit {
+
+  private userId: number | undefined;
 
   userForm = this.formBuilder.group({
     name: [''],
@@ -30,8 +33,8 @@ export class UserEditComponent implements OnInit {
       return;
     }
 
-    const userId = +this.route.snapshot.paramMap.get('userId');
-    this.userService.getUser$(userId)
+    this.userId = +this.route.snapshot.paramMap.get('userId');
+    this.userService.getUser$(this.userId)
       .subscribe(
         user => {
           this.userForm.setValue({
@@ -46,7 +49,8 @@ export class UserEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.userService.saveUser$(this.userForm.getRawValue())
+    const user: User = Object.assign({}, this.userForm.value, {id: this.userId });
+    this.userService.saveUser$(user)
       .subscribe(
         () => this.router.navigate(['/users'])
       );

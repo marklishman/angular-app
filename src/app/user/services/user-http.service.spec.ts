@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 
 import * as userFixture from '../../testing/data-fixtures/user-data-fixture';
-import createSpyObj = jasmine.createSpyObj;
-import Spy = jasmine.Spy;
 import { TestBed } from '@angular/core/testing';
 import { UserDto } from './dto/user-dto';
+import createSpyObj = jasmine.createSpyObj;
+import Spy = jasmine.Spy;
 
 describe('UserHttpService', () => {
 
@@ -19,10 +19,11 @@ describe('UserHttpService', () => {
     'pipe': throwError('ERROR')
   });
 
-  describe('getUserList$', () => {
+  // TODO remove duplication (errors)
 
+  describe('getUserList$', () => {
     beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>({
+      httpClient = createSpyObj<HttpClient>('httpClient', {
         'get': of(userFixture.userDtos)
       });
       userHttpService = new UserHttpService(httpClient);
@@ -53,9 +54,8 @@ describe('UserHttpService', () => {
   });
 
   describe('getUser$', () => {
-
     beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>({
+      httpClient = createSpyObj<HttpClient>('httpClient', {
         'get': of(userFixture.firstUserDto)
       });
       userHttpService = new UserHttpService(httpClient);
@@ -86,9 +86,8 @@ describe('UserHttpService', () => {
   });
 
   describe('createUser$', () => {
-
     beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>({
+      httpClient = createSpyObj<HttpClient>('httpClient', {
         'post': of(userFixture.firstUserDto)
       });
       userHttpService = new UserHttpService(httpClient);
@@ -119,9 +118,8 @@ describe('UserHttpService', () => {
   });
 
   describe('updateUser$', () => {
-
     beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>({
+      httpClient = createSpyObj<HttpClient>('httpClient', {
         'put': of(userFixture.firstUserDto)
       });
       userHttpService = new UserHttpService(httpClient);
@@ -151,10 +149,53 @@ describe('UserHttpService', () => {
     });
   });
 
-  describe('deleteUser$', () => {
-
+  describe('saveUser$', () => {
     beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>({
+      httpClient = createSpyObj<HttpClient>('httpClient', {
+        'post': of(userFixture.firstUserDto),
+        'put': of(userFixture.firstUserDto)
+      });
+      userHttpService = new UserHttpService(httpClient);
+    });
+
+    it('should create a new user if the user object has no id', () => {
+      const user = Object.assign({}, userFixture.firstUserDto, { id:  undefined});
+      userHttpService.saveUser$(user)
+        .subscribe(
+          () => {
+            expect(httpClient.post).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users', user);
+            expect(httpClient.put).not.toHaveBeenCalled();
+          }
+        );
+    });
+
+    it('should update an existing user if the user object has an id', () => {
+      userHttpService.saveUser$(userFixture.firstUserDto)
+        .subscribe(
+          () => {
+            expect(httpClient.put).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users/1', userFixture.firstUserDto);
+            expect(httpClient.post).not.toHaveBeenCalled();
+          }
+        );
+    });
+
+    it('should handle any errors', (done: DoneFn) => {
+      (<Spy>httpClient.put).and.returnValue(RxPipeFailure);
+
+      userHttpService.saveUser$(userFixture.firstUserDto)
+        .subscribe(
+          () => fail('should throw an error'),
+          error => {
+            expect(error).toBe('ERROR');
+            done();
+          }
+        );
+    });
+  });
+
+  describe('deleteUser$', () => {
+    beforeEach(() => {
+      httpClient = createSpyObj<HttpClient>('httpClient', {
         'delete': of({})
       });
       userHttpService = new UserHttpService(httpClient);
@@ -185,9 +226,8 @@ describe('UserHttpService', () => {
   });
 
   describe('Dependency Injection', () => {
-
     beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>({
+      httpClient = createSpyObj<HttpClient>('httpClient', {
         'get': of(userFixture.firstUserDto)
       });
 

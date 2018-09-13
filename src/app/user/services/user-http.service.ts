@@ -12,39 +12,43 @@ export class UserHttpService {
 
   private readonly Url = 'https://jsonplaceholder.typicode.com/users';
 
-  constructor(private http: HttpClient) {
+  constructor(private httpClient: HttpClient) {
   }
 
   getUserList$(): Observable<UserDto[]> {
-    return this.http.get<UserDto[]>(this.Url)
+    return this.httpClient.get<UserDto[]>(this.Url)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   getUser$(userId: number): Observable<UserDto> {
-    return this.http.get<UserDto>(`${this.Url}/${userId}`)
+    return this.httpClient.get<UserDto>(`${this.Url}/${userId}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   createUser$(user: UserDto): Observable<UserDto> {
-    return this.http.post<UserDto>(this.Url, user)
+    return this.httpClient.post<UserDto>(this.Url, user)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   updateUser$(user: UserDto): Observable<UserDto> {
-    return this.http.put<UserDto>(`${this.Url}/${user.id}`, user)
+    return this.httpClient.put<UserDto>(`${this.Url}/${user.id}`, user)
       .pipe(
         catchError(this.handleError)
       );
   }
 
+  saveUser$(user: UserDto): Observable<UserDto> {
+    return user.id ? this.updateUser$(user) : this.createUser$(user);
+  }
+
   deleteUser$(userId: number): Observable<UserDto> {
-    return this.http.delete<UserDto>(`${this.Url}/${userId}`)
+    return this.httpClient.delete<UserDto>(`${this.Url}/${userId}`)
       .pipe(
         catchError(this.handleError)
       );

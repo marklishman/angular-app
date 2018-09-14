@@ -1,6 +1,6 @@
 import { UserHttpService } from './user-http.service';
 import { HttpClient } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 import * as userFixture from '../../testing/data-fixtures/user-data-fixture';
 import { TestBed } from '@angular/core/testing';
@@ -14,12 +14,6 @@ describe('UserHttpService', () => {
   let httpClient: HttpClient;
 
   const userId = 123;
-
-  const RxPipeFailure = createSpyObj({
-    'pipe': throwError('ERROR')
-  });
-
-  // TODO remove duplication (errors)
 
   describe('getUserList$', () => {
     beforeEach(() => {
@@ -40,13 +34,14 @@ describe('UserHttpService', () => {
     });
 
     it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.get).and.returnValue(RxPipeFailure);
+      (<Spy>httpClient.get).and.callFake(() => throwError({}));
+      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
 
       userHttpService.getUserList$()
         .subscribe(
           () => fail('should throw an error'),
-          error => {
-            expect(error).toBe('ERROR');
+          () => {
+            expect((<any>userHttpService).handleError).toHaveBeenCalled();
             done();
           }
         );
@@ -72,13 +67,14 @@ describe('UserHttpService', () => {
     });
 
     it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.get).and.returnValue(RxPipeFailure);
+      (<Spy>httpClient.get).and.callFake(() => throwError({}));
+      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
 
       userHttpService.getUser$(userId)
         .subscribe(
           () => fail('should throw an error'),
-          error => {
-            expect(error).toBe('ERROR');
+          () => {
+            expect((<any>userHttpService).handleError).toHaveBeenCalled();
             done();
           }
         );
@@ -104,13 +100,14 @@ describe('UserHttpService', () => {
     });
 
     it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.post).and.returnValue(RxPipeFailure);
+      (<Spy>httpClient.post).and.callFake(() => throwError({}));
+      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
 
       userHttpService.createUser$(userFixture.firstUserDto)
         .subscribe(
           () => fail('should throw an error'),
-          error => {
-            expect(error).toBe('ERROR');
+          () => {
+            expect((<any>userHttpService).handleError).toHaveBeenCalled();
             done();
           }
         );
@@ -136,13 +133,14 @@ describe('UserHttpService', () => {
     });
 
     it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.put).and.returnValue(RxPipeFailure);
+      (<Spy>httpClient.put).and.callFake(() => throwError({}));
+      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
 
       userHttpService.updateUser$(userFixture.firstUserDto)
         .subscribe(
           () => fail('should throw an error'),
-          error => {
-            expect(error).toBe('ERROR');
+          () => {
+            expect((<any>userHttpService).handleError).toHaveBeenCalled();
             done();
           }
         );
@@ -180,13 +178,14 @@ describe('UserHttpService', () => {
     });
 
     it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.put).and.returnValue(RxPipeFailure);
+      (<Spy>httpClient.put).and.callFake(() => throwError({}));
+      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
 
       userHttpService.saveUser$(userFixture.firstUserDto)
         .subscribe(
           () => fail('should throw an error'),
-          error => {
-            expect(error).toBe('ERROR');
+          () => {
+            expect((<any>userHttpService).handleError).toHaveBeenCalled();
             done();
           }
         );
@@ -212,13 +211,53 @@ describe('UserHttpService', () => {
     });
 
     it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.delete).and.returnValue(RxPipeFailure);
+      (<Spy>httpClient.delete).and.callFake(() => throwError({}));
+      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
 
       userHttpService.deleteUser$(userFixture.firstUserDto.id)
         .subscribe(
           () => fail('should throw an error'),
+          () => {
+            expect((<any>userHttpService).handleError).toHaveBeenCalled();
+            done();
+          }
+        );
+    });
+  });
+
+  describe('handleError', () => {
+    beforeEach(() => {
+      httpClient = createSpyObj<HttpClient>('httpClient', {
+        'get': of(userFixture.userDtos)
+      });
+      userHttpService = new UserHttpService(httpClient);
+    });
+
+    it('should handle error events', (done: DoneFn) => {
+      (<Spy>httpClient.get).and.callFake(() => throwError({
+        error: new ErrorEvent('error', {
+          message : 'some error event'
+        })
+      }));
+
+      userHttpService.getUserList$()
+        .subscribe(
+          () => fail('should throw an error'),
           error => {
-            expect(error).toBe('ERROR');
+            expect(error).toBe('An error occurred: some error event');
+            done();
+          }
+        );
+    });
+
+    it('should handle server errors', (done: DoneFn) => {
+      (<Spy>httpClient.get).and.callFake(() => throwError({status: 404}));
+
+      userHttpService.getUserList$()
+        .subscribe(
+          () => fail('should throw an error'),
+          error => {
+            expect(error).toBe('Server returned code 404');
             done();
           }
         );
@@ -247,5 +286,4 @@ describe('UserHttpService', () => {
     });
 
   });
-
 });

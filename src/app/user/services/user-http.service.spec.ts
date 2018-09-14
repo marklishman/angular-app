@@ -1,6 +1,6 @@
 import { UserHttpService } from './user-http.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import * as userFixture from '../../testing/data-fixtures/user-data-fixture';
 import { TestBed } from '@angular/core/testing';
@@ -15,12 +15,19 @@ describe('UserHttpService', () => {
 
   const userId = 123;
 
+  beforeEach(() => {
+    httpClient = createSpyObj<HttpClient>('httpClient', {
+      'get': undefined, // could be getUserList$ or getUser$
+      'post': of(userFixture.firstUserDto),
+      'put': of(userFixture.firstUserDto),
+      'delete': of({})
+    });
+    userHttpService = new UserHttpService(httpClient);
+  });
+
   describe('getUserList$', () => {
     beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>('httpClient', {
-        'get': of(userFixture.userDtos)
-      });
-      userHttpService = new UserHttpService(httpClient);
+      (<Spy>httpClient.get).and.returnValue(of(userFixture.userDtos));
     });
 
     it('should get a list of users', () => {
@@ -33,27 +40,12 @@ describe('UserHttpService', () => {
         );
     });
 
-    it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.get).and.callFake(() => throwError({}));
-      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
-
-      userHttpService.getUserList$()
-        .subscribe(
-          () => fail('should throw an error'),
-          () => {
-            expect((<any>userHttpService).handleError).toHaveBeenCalled();
-            done();
-          }
-        );
-    });
+    testHandleError('getUserList$');
   });
 
   describe('getUser$', () => {
     beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>('httpClient', {
-        'get': of(userFixture.firstUserDto)
-      });
-      userHttpService = new UserHttpService(httpClient);
+      (<Spy>httpClient.get).and.returnValue(of(userFixture.firstUserDto));
     });
 
     it('should get a user', () => {
@@ -66,29 +58,10 @@ describe('UserHttpService', () => {
         );
     });
 
-    it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.get).and.callFake(() => throwError({}));
-      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
-
-      userHttpService.getUser$(userId)
-        .subscribe(
-          () => fail('should throw an error'),
-          () => {
-            expect((<any>userHttpService).handleError).toHaveBeenCalled();
-            done();
-          }
-        );
-    });
+    testHandleError('getUser$');
   });
 
   describe('createUser$', () => {
-    beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>('httpClient', {
-        'post': of(userFixture.firstUserDto)
-      });
-      userHttpService = new UserHttpService(httpClient);
-    });
-
     it('should create a user', () => {
       userHttpService.createUser$(userFixture.firstUserDto)
         .subscribe(
@@ -99,29 +72,10 @@ describe('UserHttpService', () => {
         );
     });
 
-    it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.post).and.callFake(() => throwError({}));
-      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
-
-      userHttpService.createUser$(userFixture.firstUserDto)
-        .subscribe(
-          () => fail('should throw an error'),
-          () => {
-            expect((<any>userHttpService).handleError).toHaveBeenCalled();
-            done();
-          }
-        );
-    });
+    testHandleError('createUser$');
   });
 
   describe('updateUser$', () => {
-    beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>('httpClient', {
-        'put': of(userFixture.firstUserDto)
-      });
-      userHttpService = new UserHttpService(httpClient);
-    });
-
     it('should update a user', () => {
       userHttpService.updateUser$(userFixture.firstUserDto)
         .subscribe(
@@ -132,30 +86,10 @@ describe('UserHttpService', () => {
         );
     });
 
-    it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.put).and.callFake(() => throwError({}));
-      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
-
-      userHttpService.updateUser$(userFixture.firstUserDto)
-        .subscribe(
-          () => fail('should throw an error'),
-          () => {
-            expect((<any>userHttpService).handleError).toHaveBeenCalled();
-            done();
-          }
-        );
-    });
+    testHandleError('updateUser$', userFixture.firstUserDto);
   });
 
   describe('saveUser$', () => {
-    beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>('httpClient', {
-        'post': of(userFixture.firstUserDto),
-        'put': of(userFixture.firstUserDto)
-      });
-      userHttpService = new UserHttpService(httpClient);
-    });
-
     it('should create a new user if the user object has no id', () => {
       const user = Object.assign({}, userFixture.firstUserDto, { id:  undefined});
       userHttpService.saveUser$(user)
@@ -176,30 +110,9 @@ describe('UserHttpService', () => {
           }
         );
     });
-
-    it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.put).and.callFake(() => throwError({}));
-      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
-
-      userHttpService.saveUser$(userFixture.firstUserDto)
-        .subscribe(
-          () => fail('should throw an error'),
-          () => {
-            expect((<any>userHttpService).handleError).toHaveBeenCalled();
-            done();
-          }
-        );
-    });
   });
 
   describe('deleteUser$', () => {
-    beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>('httpClient', {
-        'delete': of({})
-      });
-      userHttpService = new UserHttpService(httpClient);
-    });
-
     it('should delete a user', () => {
       userHttpService.deleteUser$(userFixture.firstUserDto.id)
         .subscribe(
@@ -210,19 +123,7 @@ describe('UserHttpService', () => {
         );
     });
 
-    it('should handle any errors', (done: DoneFn) => {
-      (<Spy>httpClient.delete).and.callFake(() => throwError({}));
-      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
-
-      userHttpService.deleteUser$(userFixture.firstUserDto.id)
-        .subscribe(
-          () => fail('should throw an error'),
-          () => {
-            expect((<any>userHttpService).handleError).toHaveBeenCalled();
-            done();
-          }
-        );
-    });
+    testHandleError('deleteUser$');
   });
 
   describe('handleError', () => {
@@ -286,4 +187,24 @@ describe('UserHttpService', () => {
     });
 
   });
+
+  function testHandleError(methodName: string, params?: any): void {
+    it('should handle any errors', (done: DoneFn) => {
+      (<Spy>httpClient.get).and.callFake(() => throwError({}));
+      (<Spy>httpClient.post).and.callFake(() => throwError({}));
+      (<Spy>httpClient.put).and.callFake(() => throwError({}));
+      (<Spy>httpClient.delete).and.callFake(() => throwError({}));
+      spyOn(<any>userHttpService, 'handleError').and.callFake(() => throwError({}));
+
+      userHttpService[methodName](params)
+        .subscribe(
+          () => fail('should throw an error'),
+          () => {
+            expect((<any>userHttpService).handleError).toHaveBeenCalled();
+            done();
+          }
+        );
+    });
+  }
+
 });

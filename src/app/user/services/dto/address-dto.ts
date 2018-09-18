@@ -1,9 +1,4 @@
-import { GeoLocationDto } from './geo-location-dto';
+import { Address, AddressData } from '../../../model/address';
 
-export interface AddressDto {
-  street: string;
-  suite: string;
-  city: string;
-  zipcode: string;
-  geo: GeoLocationDto;
-}
+// tslint:disable-next-line:no-empty-interface
+export interface AddressDto extends AddressData {}

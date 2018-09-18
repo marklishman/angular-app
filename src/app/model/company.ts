@@ -1,8 +1,15 @@
 
+export interface CompanyData {
+  readonly name: string;
+  readonly catchPhrase: string;
+  readonly info: string;
+}
+
+// tslint:disable-next-line:no-empty-interface
+export interface Company extends CompanyData {}
+
 export class Company {
-  constructor(
-    public readonly name: string,
-    public readonly catchPhrase: string,
-    public readonly bs: string
-  ) {}
+  constructor(data: CompanyData) {
+    return Object.assign(this, data);
+  }
 }

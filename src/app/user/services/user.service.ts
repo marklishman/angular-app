@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { UserHttpService } from './user-http.service';
 import { User } from '../../model/user';
 import { UserDto } from './dto/user-dto';
+import { Company } from '../../model/company';
+import { CompanyDto } from './dto/company-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -47,16 +49,29 @@ export class UserService {
   }
 
   private mapDtoToUser(userDto: UserDto): User {
+    const company = this.mapDtoToCompany(userDto.company);
+
+    // Drop 'username' and 'name'
     const {username, name, ...keep} = userDto;
     const remap = {
       userName: userDto.username,
       fullName: userDto.name,
+      company
     };
-    return Object.assign(
+    const data = Object.assign(
       {},
       keep,
       remap
     );
+    return new User(data);
+  }
+
+  private mapDtoToCompany(companyDto: CompanyDto): Company {
+    return new Company({
+      name: companyDto.name,
+      catchPhrase: companyDto.catchPhrase,
+      info: companyDto.bs,
+    });
   }
 
   private mapUserToDto(user: User): UserDto {

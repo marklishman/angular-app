@@ -15,4 +15,7 @@ export class Address {
   constructor(data: AddressData) {
     return Object.assign(this, data);
   }
+  test() {
+    console.log('this is a test');
+  }
 }

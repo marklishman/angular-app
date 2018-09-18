@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { UserHttpService } from './user-http.service';
 import { User } from '../../model/user';
 import { UserDto } from './dto/user-dto';
 import { Company } from '../../model/company';
 import { CompanyDto } from './dto/company-dto';
+import { Address } from '../../model/address';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,7 @@ export class UserService {
     return this.userHttpService.getUser$(userId)
       .pipe(
         map(userDto => this.mapDtoToUser(userDto)),
+        tap((user: User) => user.company.test())
       );
   }
 
@@ -49,20 +51,29 @@ export class UserService {
   }
 
   private mapDtoToUser(userDto: UserDto): User {
-    const company = this.mapDtoToCompany(userDto.company);
 
     // Drop 'username' and 'name'
     const {username, name, ...keep} = userDto;
-    const remap = {
-      userName: userDto.username,
-      fullName: userDto.name,
-      company
+
+    // Set up 'address' and 'company' as objects
+    const nested = {
+      address: new Address(userDto.address),
+      company: this.mapDtoToCompany(userDto.company)
     };
+
+    // Rename 'username' and 'name' to 'userName' and 'fullName'
+    const rename = {
+      userName: userDto.username,
+      fullName: userDto.name
+    };
+
     const data = Object.assign(
       {},
       keep,
-      remap
+      rename,
+      nested
     );
+
     return new User(data);
   }
 

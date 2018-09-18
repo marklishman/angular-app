@@ -12,4 +12,7 @@ export class Company {
   constructor(data: CompanyData) {
     return Object.assign(this, data);
   }
+  test() {
+    console.log('this is a test');
+  }
 }

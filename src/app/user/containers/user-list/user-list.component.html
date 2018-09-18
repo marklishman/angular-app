@@ -4,7 +4,7 @@
 <button (click)="resetSearch()">clear</button>
 <ul>
   <li *ngFor="let user of users$ | async">
-    <a [routerLink]="['/users', user.id]">{{user.name}}</a> |
+    <a [routerLink]="['/users', user.id]">{{user.fullName}}</a> |
     <a [routerLink]="['/users', user.id, 'edit']">edit</a> |
     <a href="javascript:void(0)" (click)="onDelete(user.id);">delete</a>
   </li>

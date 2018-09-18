@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { UserDto } from '../../services/dto/user-dto';
 import { UserService } from '../../services/user.service';
+import { User } from '../../../model/user';
 
 @Component({
   templateUrl: './user-view.component.html',
@@ -11,7 +12,7 @@ import { UserService } from '../../services/user.service';
 })
 export class UserViewComponent implements OnInit {
 
-  user$: Observable<UserDto>;
+  user$: Observable<User>;
 
   constructor(private userService: UserService,
               private router: Router,

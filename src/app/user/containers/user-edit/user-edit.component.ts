@@ -14,8 +14,8 @@ export class UserEditComponent implements OnInit {
   private userId: number | undefined;
 
   userForm = this.formBuilder.group({
-    name: [''],
-    username: [''],
+    userName: [''],
+    fullName: [''],
     email: [''],
     phone: [''],
     website: ['']
@@ -38,8 +38,8 @@ export class UserEditComponent implements OnInit {
       .subscribe(
         user => {
           this.userForm.setValue({
-            name: user.name,
-            username: user.username,
+            userName: user.userName,
+            fullName: user.fullName,
             email: user.email,
             phone: user.phone,
             website: user.website

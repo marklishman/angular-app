@@ -5,6 +5,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserDto } from '../../services/dto/user-dto';
 import { UserService } from '../../services/user.service';
+import { User } from '../../../model/user';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -12,7 +13,7 @@ import { UserService } from '../../services/user.service';
 })
 export class UserListComponent implements OnInit {
 
-  users$: Observable<UserDto[]>;
+  users$: Observable<User[]>;
   search = new FormControl();
 
   constructor(private userService: UserService,
@@ -47,7 +48,7 @@ export class UserListComponent implements OnInit {
     this.users$ = this.userService.getUserList$()
       .pipe(
         map(users => users.filter(
-          user => user.name.toLowerCase().includes(searchText.toLowerCase())
+          user => user.fullName.toLowerCase().includes(searchText.toLowerCase())
         ))
       );
   }

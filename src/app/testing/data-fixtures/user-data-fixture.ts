@@ -61,53 +61,53 @@ export const userDtos: UserDto[] = [
 
 // User
 
-export const firstUser = new User(
-  1,
-  'Leanne Graham',
-  'Bret',
-  'Sincere@april.biz',
-  new Address(
-    'Kulas Light',
-  'Apt. 556',
-  'Gwenborough',
-    '92998-3874',
-    new GeoLocation(
-      '-37.3159',
-      '81.1496'
-    )
-  ),
-  '1-770-736-8031 x56442',
-  'hildegard.org',
-  new Company(
-    'Romaguera-Crona',
-  'Multi-layered client-server neural-net',
-  'harness real-time e-markets'
-  )
-);
+export const firstUser = new User({
+  id: 1,
+  userName: 'Bret',
+  fullName: 'Leanne Graham',
+  email: 'Sincere@april.biz',
+  // address: new Address(
+  //   'Kulas Light',
+  //   'Apt. 556',
+  //   'Gwenborough',
+  //   '92998-3874',
+  //   new GeoLocation(
+  //     '-37.3159',
+  //     '81.1496'
+  //   )
+  // ),
+  phone: '1-770-736-8031 x56442',
+  website: 'hildegard.org',
+  // company: new Company(
+  //   'Romaguera-Crona',
+  //   'Multi-layered client-server neural-net',
+  //   'harness real-time e-markets'
+  // )
+});
 
-export const secondUser: User = new User(
-  2,
-  'Ervin Howell',
-  'Antonette',
-  'Shanna@melissa.tv',
-  new Address (
-    'Victor Plains',
-    'Suite 879',
-    'Wisokyburgh',
-    '90566-7771',
-    new GeoLocation (
-      '-43.9509',
-      '-34.4618'
-    )
-  ),
-  '010-692-6593 x09125',
-  'anastasia.net',
-  new Company(
-    'Deckow-Crist',
-    'Proactive didactic contingency',
-    'synergize scalable supply-chains'
-  )
-);
+export const secondUser: User = new User({
+  id: 2,
+  userName: 'Antonette',
+  fullName: 'Ervin Howell',
+  email: 'Shanna@melissa.tv',
+  // address: new Address(
+  //   'Victor Plains',
+  //   'Suite 879',
+  //   'Wisokyburgh',
+  //   '90566-7771',
+  //   new GeoLocation(
+  //     '-43.9509',
+  //     '-34.4618'
+  //   )
+  // ),
+  phone: '010-692-6593 x09125',
+  website: 'anastasia.net',
+  // company: new Company(
+  //   'Deckow-Crist',
+  //   'Proactive didactic contingency',
+  //   'synergize scalable supply-chains'
+  // )
+});
 
 export const users: User[] = [
   firstUser,

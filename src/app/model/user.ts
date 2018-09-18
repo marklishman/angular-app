@@ -1,15 +1,22 @@
 import { Address } from './address';
 import { Company } from './company';
 
+export interface UserData {
+  readonly id: number;
+  readonly userName: string;
+  readonly fullName: string;
+  readonly email: string;
+  // readonly address: Address;
+  readonly phone: string;
+  readonly website: string;
+  // readonly company: Company;
+}
+
+// tslint:disable-next-line:no-empty-interface
+export interface User extends UserData {}
+
 export class User {
-  constructor(
-    public readonly id: number,
-    public readonly name: string,
-    public readonly username: string,
-    public readonly email: string,
-    public readonly address: Address,
-    public readonly phone: string,
-    public readonly website: string,
-    public readonly company: Company
-  ) {}
+  constructor(data: UserData) {
+    return Object.assign(this, data);
+  }
 }

@@ -11,6 +11,8 @@ import { UserDto } from './dto/user-dto';
 })
 export class UserService {
 
+  // TODO unit test
+
   constructor(private userHttpService: UserHttpService) {
   }
 
@@ -45,14 +47,16 @@ export class UserService {
   }
 
   private mapDtoToUser(userDto: UserDto): User {
-    return new User({
-      id: userDto.id,
+    const {username, name, ...keep} = userDto;
+    const remap = {
       userName: userDto.username,
       fullName: userDto.name,
-      email: userDto.email,
-      phone: userDto.phone,
-      website: userDto.website
-    });
+    };
+    return Object.assign(
+      {},
+      keep,
+      remap
+    );
   }
 
   private mapUserToDto(user: User): UserDto {

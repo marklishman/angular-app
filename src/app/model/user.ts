@@ -1,6 +1,8 @@
 import { Address } from './address';
 import { Company } from './company';
 
+// TODO add address and company
+
 export interface UserData {
   readonly id: number;
   readonly userName: string;

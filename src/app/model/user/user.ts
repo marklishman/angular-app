@@ -1,5 +1,6 @@
-import { Address } from './address';
-import { Company } from './company';
+import { Address } from '../address/address';
+import { Company } from '../company/company';
+import { UserBuilder } from './user-builder';
 
 export interface UserData {
   readonly id: number;
@@ -19,4 +20,9 @@ export class User {
   constructor(data: UserData) {
     return Object.assign(this, data);
   }
+
+  static builder(userName: string, email: string): UserBuilder {
+    return new UserBuilder(userName, email);
+  }
 }
+

@@ -1,4 +1,4 @@
-import { GeoLocation } from './geo-location';
+import { GeoLocation } from '../geo-location/geo-location';
 
 export interface AddressData {
   readonly street: string;

@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { UserDto } from './dto/user-dto';
+import { UserDto } from '../../model/user/user-dto';
 
 @Injectable({
   providedIn: 'root'

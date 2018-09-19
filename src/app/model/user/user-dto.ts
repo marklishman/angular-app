@@ -1,5 +1,5 @@
-import { AddressDto } from './address-dto';
-import { CompanyDto } from './company-dto';
+import { AddressDto } from '../address/address-dto';
+import { CompanyDto } from '../company/company-dto';
 
 export interface UserDto {
   id: number;

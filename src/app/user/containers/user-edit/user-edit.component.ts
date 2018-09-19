@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
 import { UserService } from '../../services/user.service';
-import { User } from '../../../model/user';
+import { User } from '../../../model/user/user';
 
 @Component({
   templateUrl: './user-edit.component.html',

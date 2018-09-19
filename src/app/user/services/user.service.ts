@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { UserHttpService } from './user-http.service';
-import { User } from '../../model/user';
-import { UserDto } from './dto/user-dto';
-import { Company } from '../../model/company';
-import { CompanyDto } from './dto/company-dto';
-import { Address } from '../../model/address';
+import { UserHttpService } from '../http/user-http.service';
+import { UserDto } from '../../model/user/user-dto';
+import { Company } from '../../model/company/company';
+import { CompanyDto } from '../../model/company/company-dto';
+import { Address } from '../../model/address/address';
+import { User } from '../../model/user/user';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +48,9 @@ export class UserService {
         map(userDto => this.mapDtoToUser(userDto))
       );
   }
+
+  // TODO use Object Builders
+  // https://medium.com/@ezequiel/immutability-and-builders-with-typescript-b69a51c94e8c
 
   private mapDtoToUser(userDto: UserDto): User {
 

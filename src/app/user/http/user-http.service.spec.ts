@@ -4,7 +4,7 @@ import { of, throwError } from 'rxjs';
 
 import * as userFixture from '../../testing/data-fixtures/user-data-fixture';
 import { TestBed } from '@angular/core/testing';
-import { UserDto } from './dto/user-dto';
+import { UserDto } from '../../model/user/user-dto';
 import createSpyObj = jasmine.createSpyObj;
 import Spy = jasmine.Spy;
 

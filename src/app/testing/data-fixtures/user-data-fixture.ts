@@ -1,8 +1,8 @@
-import { Address } from '../../model/address';
-import { Company } from '../../model/company';
-import { GeoLocation } from '../../model/geo-location';
-import { UserDto } from '../../user/services/dto/user-dto';
-import { User } from '../../model/user';
+import { Address } from '../../model/address/address';
+import { Company } from '../../model/company/company';
+import { GeoLocation } from '../../model/geo-location/geo-location';
+import { UserDto } from '../../model/user/user-dto';
+import { User } from '../../model/user/user';
 
 // UserDto
 

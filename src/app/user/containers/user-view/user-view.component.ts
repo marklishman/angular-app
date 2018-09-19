@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { UserDto } from '../../services/dto/user-dto';
+import { UserDto } from '../../../model/user/user-dto';
 import { UserService } from '../../services/user.service';
-import { User } from '../../../model/user';
+import { User } from '../../../model/user/user';
 
 @Component({
   templateUrl: './user-view.component.html',

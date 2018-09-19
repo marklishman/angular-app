@@ -33,7 +33,7 @@ export class UserService {
   }
 
   saveUser$(user: User): Observable<User> {
-    return this.userHttpService.saveUser$(this.mapUserToDto(user))
+    return this.userHttpService.saveUser$(user.toDto())
       .pipe(
         map(userDto => User.fromDto(userDto))
       );
@@ -46,15 +46,4 @@ export class UserService {
       );
   }
 
-  // TODO where to put this?
-  private mapUserToDto(user: User): UserDto {
-    return {
-      id: user.id,
-      name: user.fullName,
-      username: user.userName,
-      email: user.email,
-      phone: user.phone,
-      website: user.website
-    } as UserDto;
-  }
 }

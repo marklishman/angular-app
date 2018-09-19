@@ -2,7 +2,6 @@ import { Address } from '../address/address';
 import { Company } from '../company/company';
 import { UserBuilder } from './user-builder';
 import { UserDto } from './user-dto';
-import { CompanyDto } from '../company/company-dto';
 
 export interface UserData {
   readonly id: number;
@@ -41,7 +40,7 @@ export class User {
     // Instantiate 'address' and 'company' as objects
     const nested = {
       address: new Address(userDto.address),
-      company: this.mapDtoToCompany(userDto.company)
+      company: Company.fromDto(userDto.company)
     };
 
     const data = Object.assign(
@@ -54,12 +53,16 @@ export class User {
     return new User(data);
   }
 
-  private static mapDtoToCompany(companyDto: CompanyDto): Company {
-    return new Company({
-      name: companyDto.name,
-      catchPhrase: companyDto.catchPhrase,
-      info: companyDto.bs,
-    });
+  // TODO unit test
+  toDto(): UserDto {
+    return {
+      id: this.id,
+      name: this.fullName,
+      username: this.userName,
+      email: this.email,
+      phone: this.phone,
+      website: this.website
+    } as UserDto;
   }
 }
 

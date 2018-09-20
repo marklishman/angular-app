@@ -16,7 +16,7 @@ export class UserService {
   }
 
   getUserList$(): Observable<User[]> {
-    return this.userHttpService.getUserList$()
+    return this.userHttpService.getList$()
       .pipe(
         map(userDtos => userDtos.map(
           userDto => User.fromDto(userDto)
@@ -25,21 +25,21 @@ export class UserService {
   }
 
   getUser$(userId: number): Observable<User> {
-    return this.userHttpService.getUser$(userId)
+    return this.userHttpService.getById$(userId)
       .pipe(
         map(userDto => User.fromDto(userDto))
       );
   }
 
   saveUser$(user: User): Observable<User> {
-    return this.userHttpService.saveUser$(user.toDto())
+    return this.userHttpService.save$(user.toDto())
       .pipe(
         map(userDto => User.fromDto(userDto))
       );
   }
 
   deleteUser$(userId: number): Observable<User> {
-    return this.userHttpService.deleteUser$(userId)
+    return this.userHttpService.delete$(userId)
       .pipe(
         map(userDto => User.fromDto(userDto))
       );

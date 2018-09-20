@@ -25,13 +25,15 @@ describe('HttpCrudService', () => {
     userHttpService = new UserHttpService(httpClient);
   });
 
-  describe('getUserList$', () => {
+  // TODO move to HttpCrudService
+
+  describe('getList$', () => {
     beforeEach(() => {
       (<Spy>httpClient.get).and.returnValue(of(userFixture.userDtos));
     });
 
     it('should get a list of users', () => {
-      userHttpService.getUserList$()
+      userHttpService.getList$()
         .subscribe(
           actual => {
             expect(httpClient.get).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users');
@@ -40,16 +42,16 @@ describe('HttpCrudService', () => {
         );
     });
 
-    testHandleError('getUserList$');
+    testHandleError('getList$');
   });
 
-  describe('getUser$', () => {
+  describe('getById$', () => {
     beforeEach(() => {
       (<Spy>httpClient.get).and.returnValue(of(userFixture.firstUserDto));
     });
 
     it('should get a user', () => {
-      userHttpService.getUser$(userId)
+      userHttpService.getById$(userId)
         .subscribe(
           actual => {
             expect(httpClient.get).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users/123');
@@ -58,12 +60,12 @@ describe('HttpCrudService', () => {
         );
     });
 
-    testHandleError('getUser$');
+    testHandleError('getById$');
   });
 
-  describe('createUser$', () => {
+  describe('create$', () => {
     it('should create a user', () => {
-      userHttpService.createUser$(userFixture.firstUserDto)
+      userHttpService.create$(userFixture.firstUserDto)
         .subscribe(
           actual => {
             expect(httpClient.post).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users', userFixture.firstUserDto);
@@ -72,12 +74,12 @@ describe('HttpCrudService', () => {
         );
     });
 
-    testHandleError('createUser$');
+    testHandleError('create$');
   });
 
-  describe('updateUser$', () => {
+  describe('update$', () => {
     it('should update a user', () => {
-      userHttpService.updateUser$(userFixture.firstUserDto)
+      userHttpService.update$(userFixture.firstUserDto)
         .subscribe(
           actual => {
             expect(httpClient.put).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users/1', userFixture.firstUserDto);
@@ -86,13 +88,13 @@ describe('HttpCrudService', () => {
         );
     });
 
-    testHandleError('updateUser$', userFixture.firstUserDto);
+    testHandleError('update$', userFixture.firstUserDto);
   });
 
-  describe('saveUser$', () => {
+  describe('save$', () => {
     it('should create a new user if the user object has no id', () => {
       const user = Object.assign({}, userFixture.firstUserDto, { id:  undefined});
-      userHttpService.saveUser$(user)
+      userHttpService.save$(user)
         .subscribe(
           () => {
             expect(httpClient.post).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users', user);
@@ -102,7 +104,7 @@ describe('HttpCrudService', () => {
     });
 
     it('should update an existing user if the user object has an id', () => {
-      userHttpService.saveUser$(userFixture.firstUserDto)
+      userHttpService.save$(userFixture.firstUserDto)
         .subscribe(
           () => {
             expect(httpClient.put).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users/1', userFixture.firstUserDto);
@@ -112,9 +114,9 @@ describe('HttpCrudService', () => {
     });
   });
 
-  describe('deleteUser$', () => {
+  describe('delete$', () => {
     it('should delete a user', () => {
-      userHttpService.deleteUser$(userFixture.firstUserDto.id)
+      userHttpService.delete$(userFixture.firstUserDto.id)
         .subscribe(
           actual => {
             expect(httpClient.delete).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/users/' + userFixture.firstUserDto.id);
@@ -123,7 +125,7 @@ describe('HttpCrudService', () => {
         );
     });
 
-    testHandleError('deleteUser$');
+    testHandleError('delete$');
   });
 
   describe('handleError', () => {
@@ -141,7 +143,7 @@ describe('HttpCrudService', () => {
         })
       }));
 
-      userHttpService.getUserList$()
+      userHttpService.getList$()
         .subscribe(
           () => fail('should throw an error'),
           error => {
@@ -154,7 +156,7 @@ describe('HttpCrudService', () => {
     it('should handle server errors', (done: DoneFn) => {
       (<Spy>httpClient.get).and.callFake(() => throwError({status: 404}));
 
-      userHttpService.getUserList$()
+      userHttpService.getList$()
         .subscribe(
           () => fail('should throw an error'),
           error => {
@@ -182,7 +184,7 @@ describe('HttpCrudService', () => {
 
     it('should inject the http client into the service', () => {
       const service: UserHttpService = TestBed.get(UserHttpService);
-      service.getUserList$();
+      service.getList$();
       expect(httpClient.get).toHaveBeenCalled();
     });
 

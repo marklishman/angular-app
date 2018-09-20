@@ -7,34 +7,39 @@ import { Identifiable } from '../model/identifiable';
 
 export abstract class HttpCrudService<T extends Identifiable<ID>, ID> implements HttpCrudOperations<T, ID> {
 
-  protected abstract readonly url;
+  protected abstract readonly entityName;
 
-  public constructor(private httpClient: HttpClient) {}
+  // protected because it must be implemented on subclass for Angular DI
+  protected constructor(protected httpClient: HttpClient) {}
+
+  protected get entityPath(): string {
+    return `https://jsonplaceholder.typicode.com/${this.entityName}`;
+  }
 
   getList$(): Observable<T[]> {
-    return this.httpClient.get<T[]>(this.url)
+    return this.httpClient.get<T[]>(this.entityPath)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   getById$(id: ID): Observable<T> {
-    return this.httpClient.get<T>(`${this.url}/${id}`)
+    console.log(`${this.entityPath}/${id}`);
+    return this.httpClient.get<T>(`${this.entityPath}/${id}`)
       .pipe(
-        // TODO duplicated catchError
         catchError(this.handleError)
       );
   }
 
   create$(object: Identifiable<ID>): Observable<T> {
-    return this.httpClient.post<T>(this.url, object)
+    return this.httpClient.post<T>(this.entityPath, object)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   update$(object: Identifiable<ID>): Observable<T> {
-    return this.httpClient.put<T>(`${this.url}/${object.id}`, object)
+    return this.httpClient.put<T>(`${this.entityPath}/${object.id}`, object)
       .pipe(
         catchError(this.handleError)
       );
@@ -45,7 +50,7 @@ export abstract class HttpCrudService<T extends Identifiable<ID>, ID> implements
   }
 
   delete$(id: ID): Observable<T> {
-    return this.httpClient.delete<T>(`${this.url}/${id}`)
+    return this.httpClient.delete<T>(`${this.entityPath}/${id}`)
       .pipe(
         catchError(this.handleError)
       );
@@ -53,6 +58,7 @@ export abstract class HttpCrudService<T extends Identifiable<ID>, ID> implements
 
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
+      // client-side or network error
       return throwError(`An error occurred: ${error.error.message}`);
     }
     return throwError(`Server returned code ${error.status}`);

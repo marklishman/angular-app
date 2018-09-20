@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
 import { UserService } from '../../services/user.service';
-import { User } from '../../../model/user/user';
+import { User, UserData } from '../../../model/user/user';
 
 @Component({
   templateUrl: './user-edit.component.html',
@@ -49,7 +49,9 @@ export class UserEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const user: User = Object.assign({}, this.userForm.value, {id: this.userId });
+    // TODO set up UserData from userForm
+    const userData: UserData = Object.assign({}, this.userForm.value, {id: this.userId });
+    const user = new User(userData);
     this.userService.saveUser$(user)
       .subscribe(
         () => this.router.navigate(['/users'])

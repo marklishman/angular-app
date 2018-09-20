@@ -8,7 +8,7 @@ import { UserDto } from '../../model/user/user-dto';
 import createSpyObj = jasmine.createSpyObj;
 import Spy = jasmine.Spy;
 
-describe('UserHttpService', () => {
+describe('HttpCrudService', () => {
 
   let userHttpService: UserHttpService;
   let httpClient: HttpClient;

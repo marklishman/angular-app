@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { UserHttpService } from '../http/user-http.service';
-import { UserDto } from '../../model/user/user-dto';
 import { User } from '../../model/user/user';
 
 @Injectable({

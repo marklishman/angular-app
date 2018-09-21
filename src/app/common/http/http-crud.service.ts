@@ -1,30 +1,35 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { HttpCrudOperations } from './http-crud-operations';
 import { Identifiable } from '../model/identifiable';
+import { HttpService } from './http.service';
 
-export abstract class HttpCrudService<T extends Identifiable<ID>, ID> implements HttpCrudOperations<T, ID> {
-
-  protected abstract readonly entityName;
+export abstract class HttpCrudService<T extends Identifiable<ID>, ID>
+  extends HttpService
+  implements HttpCrudOperations<T, ID> {
 
   // protected because it must be implemented on subclass for Angular DI
-  protected constructor(protected httpClient: HttpClient) {}
+  protected constructor(private entityName: string, httpClient: HttpClient) {
+    super(httpClient);
+  }
 
   protected get entityPath(): string {
     return `https://jsonplaceholder.typicode.com/${this.entityName}`;
+    // Spring Data Rest
+    // return `api/${this.entityName}`;
   }
 
   getList$(): Observable<T[]> {
     return this.httpClient.get<T[]>(this.entityPath)
       .pipe(
+        // map((data: any) => data._embedded.users),
         catchError(this.handleError)
       );
   }
 
   getById$(id: ID): Observable<T> {
-    console.log(`${this.entityPath}/${id}`);
     return this.httpClient.get<T>(`${this.entityPath}/${id}`)
       .pipe(
         catchError(this.handleError)
@@ -54,13 +59,5 @@ export abstract class HttpCrudService<T extends Identifiable<ID>, ID> implements
       .pipe(
         catchError(this.handleError)
       );
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<any> {
-    if (error.error instanceof ErrorEvent) {
-      // client-side or network error
-      return throwError(`An error occurred: ${error.error.message}`);
-    }
-    return throwError(`Server returned code ${error.status}`);
   }
 }

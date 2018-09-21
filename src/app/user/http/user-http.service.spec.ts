@@ -128,45 +128,6 @@ describe('HttpCrudService', () => {
     testHandleError('delete$');
   });
 
-  describe('handleError', () => {
-    beforeEach(() => {
-      httpClient = createSpyObj<HttpClient>('httpClient', {
-        'get': of(userFixture.userDtos)
-      });
-      userHttpService = new UserHttpService(httpClient);
-    });
-
-    it('should handle error events', (done: DoneFn) => {
-      (<Spy>httpClient.get).and.callFake(() => throwError({
-        error: new ErrorEvent('error', {
-          message : 'some error event'
-        })
-      }));
-
-      userHttpService.getList$()
-        .subscribe(
-          () => fail('should throw an error'),
-          error => {
-            expect(error).toBe('An error occurred: some error event');
-            done();
-          }
-        );
-    });
-
-    it('should handle server errors', (done: DoneFn) => {
-      (<Spy>httpClient.get).and.callFake(() => throwError({status: 404}));
-
-      userHttpService.getList$()
-        .subscribe(
-          () => fail('should throw an error'),
-          error => {
-            expect(error).toBe('Server returned code 404');
-            done();
-          }
-        );
-    });
-  });
-
   describe('Dependency Injection', () => {
     beforeEach(() => {
       httpClient = createSpyObj<HttpClient>('httpClient', {

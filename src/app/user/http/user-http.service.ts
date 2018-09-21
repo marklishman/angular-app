@@ -9,9 +9,7 @@ import { HttpCrudService } from '../../common/http/http-crud.service';
 })
 export class UserHttpService extends HttpCrudService<UserDto, number> {
 
-  entityName = 'users';
-
   constructor(httpClient: HttpClient) {
-    super(httpClient);
+    super('users', httpClient);
   }
 }

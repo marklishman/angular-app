@@ -9,11 +9,12 @@ export interface TestDto extends Identifiable<number> {
   email: string;
 }
 
+// TODO use user-http.service.spec.ts
+
 class UserTest extends HttpCrudService<TestDto, number> {
   constructor(httpClient: HttpClient) {
-    super(httpClient);
+    super('user', httpClient);
   }
-  entityName = 'user';
 }
 
 describe('HttpCrudService', () => {

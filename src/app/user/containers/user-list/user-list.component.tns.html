@@ -1,1 +1,11 @@
-<Label text="Entry Component works" textWrap="true" class="test"></Label>
+
+<ListView height="100%"
+          [items]="users$ | async"
+          class="list-group">
+  <ng-template let-user="item">
+    <StackLayout>
+      <Label [text]="user.fullName" class="user-name"></Label>
+    </StackLayout>
+  </ng-template>
+</ListView>
+

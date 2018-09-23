@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Page } from 'tns-core-modules/ui/page';
+
 import { UserService } from '../../services/user.service';
 import { User } from '../../../model/user/user';
 
@@ -16,7 +18,10 @@ export class UserListComponent implements OnInit {
   search = new FormControl();
 
   constructor(private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              private page: Page) {
+    page.actionBarHidden = true;
+  }
 
   ngOnInit() {
     this.users$ = this.userService.getUserList$();
@@ -26,7 +31,7 @@ export class UserListComponent implements OnInit {
         distinctUntilChanged(),
         map(searchText => searchText.trim().toLowerCase())
       )
-      .subscribe( searchText => this.applyFilter(searchText));
+      .subscribe(searchText => this.applyFilter(searchText));
   }
 
   resetSearch(): void {

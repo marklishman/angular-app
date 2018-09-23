@@ -1,18 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module.tns';
 import { AppComponent } from './main/app.component';
 import { UserListComponent } from './user/containers/user-list/user-list.component';
-import { UserViewComponent } from './user/containers/user-view/user-view.component';
 import { UserEditComponent } from './user/containers/user-edit/user-edit.component';
-import { HttpClientModule } from '@angular/common/http';
+import { UserViewComponent } from './user/containers/user-view/user-view.component';
+import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
 import { UserHttpService } from './user/http/user-http.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './user/services/user.service';
-
-
-// TODO common values using spread
 
 @NgModule({
   declarations: [
@@ -22,15 +18,15 @@ import { UserService } from './user/services/user.service';
     UserEditComponent,
   ],
   imports: [
-    BrowserModule,
-    ReactiveFormsModule,
+    NativeScriptModule,
     AppRoutingModule,
-    HttpClientModule
+    NativeScriptHttpClientModule,
   ],
   providers: [
     UserHttpService,
     UserService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

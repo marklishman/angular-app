@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { UserDto } from '../../../model/user/user-dto';
 import { UserService } from '../../services/user.service';
 import { User } from '../../../model/user/user';
 

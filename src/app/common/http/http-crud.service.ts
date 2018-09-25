@@ -11,13 +11,17 @@ export abstract class HttpCrudService<T extends Identifiable<ID>, ID>
   implements HttpCrudOperations<T, ID> {
 
   // protected because it must be implemented on subclass for Angular DI
-  protected constructor(private entityName: string, httpClient: HttpClient) {
+  protected constructor(private readonly _entityName: string, httpClient: HttpClient) {
     super(httpClient);
+  }
+
+  get entityName(): string {
+    return this._entityName;
   }
 
   protected get entityPath(): string {
     return `https://jsonplaceholder.typicode.com/${this.entityName}`;
-    // Spring Data Rest
+    // For Spring Data Rest use
     // return `api/${this.entityName}`;
   }
 

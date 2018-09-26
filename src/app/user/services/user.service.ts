@@ -10,8 +10,6 @@ import { User } from '../../model/user/user';
 })
 export class UserService {
 
-  // TODO unit test
-
   constructor(private userHttpService: UserHttpService) {
   }
 

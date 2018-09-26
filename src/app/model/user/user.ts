@@ -26,7 +26,6 @@ export class User {
     return new UserBuilder(userName, email);
   }
 
-  // TODO unit test
   static fromDto(userDto: UserDto): User {
     // Drop 'username' and 'name'
     const {username, name, ...keep} = userDto;
@@ -53,7 +52,6 @@ export class User {
     return new User(data);
   }
 
-  // TODO unit test
   toDto(): UserDto {
     return {
       id: this.id,

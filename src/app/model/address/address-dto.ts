@@ -1,4 +1,9 @@
-import { AddressData } from './address';
+import { GeoLocationDto } from '../geo-location/geo-location-dto';
 
-// tslint:disable-next-line:no-empty-interface
-export interface AddressDto extends AddressData {}
+export interface AddressDto {
+  readonly street: string;
+  readonly suite: string;
+  readonly city: string;
+  readonly zipcode: string;
+  readonly geo: GeoLocationDto;
+}

@@ -30,8 +30,8 @@ export const firstAddress = new Address({
   city: 'Gwenborough',
   zipcode: '92998-3874',
   geo: new GeoLocation({
-    lat: '-37.3159',
-    lng: '81.1496'
+    lat: -37.3159,
+    lng: 81.1496
   })
 });
 
@@ -41,7 +41,7 @@ export const secondAddress: Address = new Address({
   city: 'Wisokyburgh',
   zipcode: '90566-7771',
   geo: new GeoLocation({
-    lat: '-43.9509',
-    lng: '-34.4618'
+    lat: -43.9509,
+    lng: -34.4618
   })
 });

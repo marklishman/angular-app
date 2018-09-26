@@ -17,7 +17,6 @@ export class Address {
     return Object.assign(this, data);
   }
 
-  // TODO unit test
   static fromDto(addressDto: AddressDto): Address {
     const geo = GeoLocation.fromDto(addressDto.geo);
     const data = Object.assign(addressDto, { geo });

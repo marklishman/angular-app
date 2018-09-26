@@ -1,8 +1,8 @@
 import { GeoLocationDto } from './geo-location-dto';
 
 export interface GeoLocationData {
-  readonly lat: string;
-  readonly lng: string;
+  readonly lat: number;
+  readonly lng: number;
 }
 
 // tslint:disable-next-line:no-empty-interface
@@ -13,8 +13,10 @@ export class GeoLocation {
     return Object.assign(this, data);
   }
 
-  // TODO unit test
   static fromDto(geoLocationDto: GeoLocationDto): GeoLocation {
-    return new GeoLocation(geoLocationDto);
+    return new GeoLocation({
+      lat: parseFloat(geoLocationDto.lat),
+      lng: parseFloat(geoLocationDto.lng)
+    });
   }
 }

@@ -7,6 +7,8 @@ import { UserService } from './user.service';
 
 xdescribe('UserService', () => {
 
+  const USER_ID = userFixture.firstUser.id;
+
   let userService: UserService;
   let userHttpService: UserHttpService;
 
@@ -28,5 +30,25 @@ xdescribe('UserService', () => {
         );
     });
   });
+
+  describe('getUser$', () => {
+
+    beforeEach(() => {
+
+      userHttpService = createSpyObj<UserHttpService>({
+        'getUser$': of(userFixture.firstUserDto)
+      });
+
+      userService = new UserService(userHttpService);
+    });
+
+    it('should get a user', () => {
+      userService.getUser$(USER_ID)
+        .subscribe(
+          actual => expect(actual).toBe(userFixture.firstUser)
+        );
+    });
+  });
+
 
 });

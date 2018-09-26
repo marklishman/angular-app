@@ -39,7 +39,7 @@ export class User {
 
     // Instantiate 'address' and 'company' as objects
     const nested = {
-      address: new Address(userDto.address),
+      address: Address.fromDto(userDto.address),
       company: Company.fromDto(userDto.company)
     };
 

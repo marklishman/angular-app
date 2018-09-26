@@ -1,5 +1,4 @@
+import { GeoLocation } from './geo-location';
 
-export interface GeoLocationDto {
-  lat: string;
-  lng: string;
-}
+// tslint:disable-next-line:no-empty-interface
+export interface GeoLocationDto extends GeoLocation {}

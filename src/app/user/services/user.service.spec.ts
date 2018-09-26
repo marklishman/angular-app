@@ -1,11 +1,14 @@
 import { UserHttpService } from '../http/user-http.service';
-import createSpyObj = jasmine.createSpyObj;
 import { of } from 'rxjs';
 
-import * as userFixture from '../../testing/data-fixtures/user-data-fixture';
+import * as userFixture from '../../model/user/user-fixture';
 import { UserService } from './user.service';
+import createSpyObj = jasmine.createSpyObj;
+import objectContaining = jasmine.objectContaining;
 
-xdescribe('UserService', () => {
+describe('UserService', () => {
+
+  // TODO unit test error handling
 
   const USER_ID = userFixture.firstUser.id;
 
@@ -15,18 +18,17 @@ xdescribe('UserService', () => {
   describe('getUserList$', () => {
 
     beforeEach(() => {
-
       userHttpService = createSpyObj<UserHttpService>({
-        'getUserList$': of(userFixture.users)
+        'getList$': of(userFixture.userDtos)
       });
-
       userService = new UserService(userHttpService);
     });
 
-    it('should get a list of users', () => {
+    it('should get a list of users and convert the DTOs', () => {
       userService.getUserList$()
         .subscribe(
-          actual => expect(actual).toBe(userFixture.users)
+          actual => expect(actual).toEqual(userFixture.users)
+
         );
     });
   });
@@ -34,18 +36,16 @@ xdescribe('UserService', () => {
   describe('getUser$', () => {
 
     beforeEach(() => {
-
       userHttpService = createSpyObj<UserHttpService>({
-        'getUser$': of(userFixture.firstUserDto)
+        'getById$': of(userFixture.firstUserDto)
       });
-
       userService = new UserService(userHttpService);
     });
 
-    it('should get a user', () => {
+    it('should get a user and convert the DTO', () => {
       userService.getUser$(USER_ID)
         .subscribe(
-          actual => expect(actual).toBe(userFixture.firstUser)
+          actual => expect(actual).toEqual(userFixture.firstUser)
         );
     });
   });

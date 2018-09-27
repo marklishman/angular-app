@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { UserDto } from '../../../model/user/user-dto';
+
 import { UserService } from '../../services/user.service';
 import { User } from '../../../model/user/user';
 
@@ -45,6 +45,7 @@ export class UserListComponent implements OnInit {
   }
 
   private applyFilter(searchText: string): void {
+    // TODO overwrites user$
     this.users$ = this.userService.getUserList$()
       .pipe(
         map(users => users.filter(

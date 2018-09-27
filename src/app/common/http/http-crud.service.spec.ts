@@ -83,7 +83,7 @@ describe('HttpCrudService', () => {
       (<Spy>httpClient.get).and.returnValue(of(firstTestDto));
     });
 
-    it('should get a test DTO', () => {
+    it('should get a DTO', () => {
       testHttpCrudService.getById$(firstTestDto.id)
         .subscribe(
           actual => {
@@ -97,7 +97,7 @@ describe('HttpCrudService', () => {
   });
 
   describe('create$', () => {
-    it('should create a test DTO', () => {
+    it('should post a DTO', () => {
       testHttpCrudService.create$(firstTestDto)
         .subscribe(
           actual => {
@@ -111,7 +111,7 @@ describe('HttpCrudService', () => {
   });
 
   describe('update$', () => {
-    it('should update a test DTO', () => {
+    it('should put a DTO', () => {
       testHttpCrudService.update$(firstTestDto)
         .subscribe(
           actual => {
@@ -125,7 +125,7 @@ describe('HttpCrudService', () => {
   });
 
   describe('save$', () => {
-    it('should create a new test DTO if the test DTO object has no id', () => {
+    it('should post a DTO if the DTO object has no id', () => {
       const testDto = Object.assign({}, firstTestDto, { id:  undefined});
       testHttpCrudService.save$(testDto)
         .subscribe(
@@ -136,7 +136,7 @@ describe('HttpCrudService', () => {
         );
     });
 
-    it('should update an existing entity if the entity object has an id', () => {
+    it('should put a DTO if the DTO object has an id', () => {
       testHttpCrudService.save$(firstTestDto)
         .subscribe(
           () => {
@@ -148,7 +148,7 @@ describe('HttpCrudService', () => {
   });
 
   describe('delete$', () => {
-    it('should delete an entity', () => {
+    it('should delete a DTO', () => {
       testHttpCrudService.delete$(firstTestDto.id)
         .subscribe(
           actual => {

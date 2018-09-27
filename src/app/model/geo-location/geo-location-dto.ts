@@ -1,5 +1,5 @@
-
+// tslint:disable-next-line:no-empty-interface
 export interface GeoLocationDto {
-  lat: string;
-  lng: string;
+  readonly lat: string;
+  readonly lng: string;
 }

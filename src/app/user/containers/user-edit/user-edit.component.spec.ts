@@ -5,7 +5,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
 import { UserService } from '../../services/user.service';
-import * as userFixture from '../../../testing/data-fixtures/user-data-fixture';
+import * as userFixture from '../../../model/user/user-fixture';
 import { UserEditComponent } from './user-edit.component';
 import createSpyObj = jasmine.createSpyObj;
 

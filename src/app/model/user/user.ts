@@ -26,7 +26,6 @@ export class User {
     return new UserBuilder(userName, email);
   }
 
-  // TODO unit test
   static fromDto(userDto: UserDto): User {
     // Drop 'username' and 'name'
     const {username, name, ...keep} = userDto;
@@ -39,7 +38,7 @@ export class User {
 
     // Instantiate 'address' and 'company' as objects
     const nested = {
-      address: new Address(userDto.address),
+      address: Address.fromDto(userDto.address),
       company: Company.fromDto(userDto.company)
     };
 
@@ -53,7 +52,6 @@ export class User {
     return new User(data);
   }
 
-  // TODO unit test
   toDto(): UserDto {
     return {
       id: this.id,

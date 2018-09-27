@@ -14,7 +14,6 @@ export class Company {
     return Object.assign(this, data);
   }
 
-  // TODO unit test
   static fromDto(companyDto: CompanyDto): Company {
     return new Company({
       name: companyDto.name,

@@ -28,6 +28,7 @@ export abstract class HttpCrudService<T extends Identifiable<ID>, ID>
   getList$(): Observable<T[]> {
     return this.httpClient.get<T[]>(this.entityPath)
       .pipe(
+        // For Spring Data Rest use
         // map((data: any) => data._embedded.users),
         catchError(this.handleError)
       );

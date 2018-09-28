@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, merge, Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, startWith, tap } from 'rxjs/operators';
 
 import { UserService } from '../../services/user.service';
 import { User } from '../../../model/user/user';
@@ -14,25 +14,34 @@ import { User } from '../../../model/user/user';
 export class UserListComponent implements OnInit {
 
   users$: Observable<User[]>;
+  reset$ = new BehaviorSubject<string>('');
   search = new FormControl();
 
   constructor(private userService: UserService,
               private router: Router) { }
 
   ngOnInit() {
-    this.users$ = this.userService.getUserList$();
-    this.search.valueChanges
+
+    const userData$ = this.userService.getUserList$();
+
+    const searchText$ = this.search.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
-        map(searchText => searchText.trim().toLowerCase())
-      )
-      .subscribe( searchText => this.applyFilter(searchText));
+        map(searchText => searchText.trim().toLowerCase()),
+      );
+
+    const filterTrigger$ = merge(searchText$, this.reset$);
+
+    this.users$ = combineLatest(userData$, filterTrigger$)
+      .pipe(
+        map(([users, searchText]) =>
+          users.filter(user => user.fullName.toLowerCase().includes(searchText.toLowerCase()))
+        ));
   }
 
   resetSearch(): void {
-    this.search.reset(null, {emitEvent: false});
-    this.applyFilter('');
+    this.reset$.next('');
   }
 
   onDelete(id: number): void {
@@ -43,15 +52,4 @@ export class UserListComponent implements OnInit {
         );
     }
   }
-
-  private applyFilter(searchText: string): void {
-    // TODO overwrites user$
-    this.users$ = this.userService.getUserList$()
-      .pipe(
-        map(users => users.filter(
-          user => user.fullName.toLowerCase().includes(searchText.toLowerCase())
-        ))
-      );
-  }
-
 }

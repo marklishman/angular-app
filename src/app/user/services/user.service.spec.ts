@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 
 import * as userFixture from '../../model/user/user-fixture';
 import { UserService } from './user.service';
+import { TestBed } from '@angular/core/testing';
 import createSpyObj = jasmine.createSpyObj;
 
 describe('UserService', () => {
@@ -69,6 +70,26 @@ describe('UserService', () => {
           }
         );
     });
+  });
+
+  describe('Dependency Injection', () => {
+    beforeEach(() => {
+
+      TestBed.configureTestingModule({
+        providers: [
+          UserService,
+          { provide: UserHttpService, useValue: userHttpService },
+        ]
+      });
+
+    });
+
+    it('should inject the user http service into the user service', () => {
+      const service: UserHttpService = TestBed.get(UserHttpService);
+      service.getList$();
+      expect(userHttpService.getList$).toHaveBeenCalled();
+    });
+
   });
 
 });

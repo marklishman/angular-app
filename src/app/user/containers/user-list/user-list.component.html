@@ -2,6 +2,7 @@
        [formControl]="search"
        placeholder="search">
 <button (click)="resetSearch()">clear</button>
+
 <ul>
   <li *ngFor="let user of users$ | async">
     <a [routerLink]="['/users', user.id]">{{user.fullName}}</a> |

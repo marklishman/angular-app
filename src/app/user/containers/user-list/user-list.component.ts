@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { Page } from 'tns-core-modules/ui/page';
 
 import { UserService } from '../../services/user.service';
@@ -49,6 +49,7 @@ export class UserListComponent implements OnInit {
   }
 
   private applyFilter(searchText: string): void {
+    // TODO overwrites user$
     this.users$ = this.userService.getUserList$()
       .pipe(
         map(users => users.filter(

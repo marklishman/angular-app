@@ -3,9 +3,8 @@ import { of } from 'rxjs';
 
 import * as userFixture from '../../model/user/user-fixture';
 import { UserService } from './user.service';
-import createSpyObj = jasmine.createSpyObj;
-import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import createSpyObj = jasmine.createSpyObj;
 
 describe('UserService', () => {
 

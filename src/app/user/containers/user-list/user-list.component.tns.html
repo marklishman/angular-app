@@ -1,11 +1,25 @@
 
-<ListView height="100%"
-          [items]="users$ | async"
-          class="list-group">
-  <ng-template let-user="item">
-    <StackLayout>
-      <Label [text]="user.fullName" class="user-name"></Label>
-    </StackLayout>
-  </ng-template>
-</ListView>
+<StackLayout>
+
+  <TextField [formControl]="search"
+             hint="Search"
+             secure="false"
+             autocorrect="false"
+             maxLength="20"
+             class="search-box">
+  </TextField>
+
+  <ListView height="100%"
+            [items]="users$ | async"
+            class="list-group">
+    <ng-template let-user="item">
+      <StackLayout>
+        <Label [text]="user.fullName"
+               [nsRouterLink]="['/users', user.id]"
+               class="user-name">
+        </Label>
+      </StackLayout>
+    </ng-template>
+  </ListView>
+</StackLayout>
 

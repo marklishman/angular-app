@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, merge, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { Page } from 'tns-core-modules/ui/page';
-import { BehaviorSubject, combineLatest, merge, Observable, Subject } from 'rxjs';
 
 import { UserService } from '../../services/user.service';
 import { User } from '../../../model/user/user';
@@ -20,9 +18,7 @@ export class UserListComponent implements OnInit {
   search = new FormControl();
 
   constructor(private userService: UserService,
-              private router: Router,
-              private page: Page) {
-    page.actionBarHidden = true;
+              private router: Router) {
   }
 
   ngOnInit() {

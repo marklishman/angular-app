@@ -1,0 +1,21 @@
+
+<StackLayout *ngIf="user$ | async as user">
+  <GridLayout rows="50,50,50,50,50" columns="auto, *">
+    <Label text="Name" row="0" col="0"></Label>
+    <Label [text]="user.fullName" row="0" col="1"></Label>
+    <Label text="User name" row="1" col="0"></Label>
+    <Label [text]="user.userName" row="1" col="1"></Label>
+    <Label text="Email" row="2" col="0"></Label>
+    <Label [text]="user.email" row="2" col="1"></Label>
+    <Label text="Phone" row="3" col="0"></Label>
+    <Label [text]="user.phone" row="3" col="1"></Label>
+    <Label text="Website" row="4" col="0"></Label>
+    <Label [text]="user.website" row="4" col="1"></Label>
+  </GridLayout>
+
+  <Button text="Back"
+          [nsRouterLink]="'/users'"
+          class="m-t-20">
+  </Button>
+</StackLayout>
+

@@ -1,0 +1,23 @@
+
+<StackLayout class="main">
+  <ActionBar title="Edit User Details">
+    <NavigationButton text="Back"
+                      android.systemIcon="ic_menu_back"
+                      [nsRouterLink]="['/users', userId]">
+    </NavigationButton>
+  </ActionBar>
+  <GridLayout [formGroup]="userForm" rows="50,50,50,50,50" columns="auto, *">
+    <Label text="Name" row="0" col="0"></Label>
+    <TextField formControlName="fullName" row="0" col="1"></TextField>
+    <Label text="User name" row="1" col="0"></Label>
+    <TextField formControlName="userName" row="1" col="1"></TextField>
+    <Label text="Email" row="2" col="0"></Label>
+    <TextField formControlName="email" row="2" col="1"></TextField>
+    <Label text="Phone" row="3" col="0"></Label>
+    <TextField formControlName="phone" row="3" col="1"></TextField>
+    <Label text="Website" row="4" col="0"></Label>
+    <TextField formControlName="website" row="4" col="1"></TextField>
+  </GridLayout>
+  <Button text="Save" (tap)="onSubmit()" class="btn btn-primary"></Button>
+</StackLayout>
+

@@ -1,5 +1,11 @@
 
-<StackLayout *ngIf="user$ | async as user">
+<StackLayout *ngIf="user$ | async as user" class="main">
+  <ActionBar title="User Details">
+    <NavigationButton text="Back"
+                      android.systemIcon="ic_menu_back"
+                      [nsRouterLink]="'/users'">
+    </NavigationButton>
+  </ActionBar>
   <GridLayout rows="50,50,50,50,50" columns="auto, *">
     <Label text="Name" row="0" col="0"></Label>
     <Label [text]="user.fullName" row="0" col="1"></Label>
@@ -12,10 +18,5 @@
     <Label text="Website" row="4" col="0"></Label>
     <Label [text]="user.website" row="4" col="1"></Label>
   </GridLayout>
-
-  <Button text="Back"
-          [nsRouterLink]="'/users'"
-          class="m-t-20">
-  </Button>
+  <Button text="Edit" [nsRouterLink]="['/users', user.id, 'edit']" class="btn btn-primary"></Button>
 </StackLayout>
-

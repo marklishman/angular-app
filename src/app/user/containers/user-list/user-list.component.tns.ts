@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-
-import { AbstractUserListComponent } from './abstract-user-list.component';
 import { Router } from '@angular/router';
+
 import { UserService } from '../../services/user.service';
+import { Page } from 'tns-core-modules/ui/page';
+import { AbstractUserListComponent } from './abstract-user-list.component';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -11,7 +12,9 @@ import { UserService } from '../../services/user.service';
 export class UserListComponent extends AbstractUserListComponent {
 
   constructor(userService: UserService,
-              router: Router) {
+              router: Router,
+              private page: Page) {
     super(userService, router);
+    page.actionBarHidden = true;
   }
 }

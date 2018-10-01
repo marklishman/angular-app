@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, startWith, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, merge, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { UserService } from '../../services/user.service';
 import { User } from '../../../model/user/user';
+import { lowerCaseTrim } from '../../../common/rxjs/operators';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -27,16 +28,15 @@ export class UserListComponent implements OnInit {
     const searchText$ = this.search.valueChanges
       .pipe(
         debounceTime(500),
+        lowerCaseTrim(),
         distinctUntilChanged(),
-        map(searchText => searchText.trim().toLowerCase()),
       );
-
     const filterTrigger$ = merge(searchText$, this.reset$);
 
     this.users$ = combineLatest(userData$, filterTrigger$)
       .pipe(
         map(([users, searchText]) =>
-          users.filter(user => user.fullName.toLowerCase().includes(searchText.toLowerCase()))
+          users.filter(user => user.fullName.toLowerCase().includes(searchText))
         ));
   }
 

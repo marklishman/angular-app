@@ -18,11 +18,13 @@ export class UserViewComponent extends AbstractUserViewComponent {
   }
 
   onDelete(id: number): void {
-    confirm('Are you sure?').then((result: boolean) => {
-      this.userService.deleteUser$(id)
-        .subscribe(
-          () => this.router.navigate(['/users'])
-        );
+    confirm('Are you sure?').then((confirmed: boolean) => {
+      if (confirmed) {
+        this.userService.deleteUser$(id)
+          .subscribe(
+            () => this.router.navigate(['/users'])
+          );
+      }
     });
   }
 }

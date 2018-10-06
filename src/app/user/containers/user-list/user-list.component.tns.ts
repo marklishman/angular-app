@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Page } from 'tns-core-modules/ui/page';
 
 import { UserService } from '../../services/user.service';
-import { Page } from 'tns-core-modules/ui/page';
 import { AbstractUserListComponent } from './abstract-user-list.component';
 
 @Component({

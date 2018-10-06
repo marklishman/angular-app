@@ -1,11 +1,16 @@
 
 <StackLayout>
-  <SearchBar [formControl]="search"
+  <SearchBar #searchBar
+             [formControl]="search"
              secure="false"
              autocorrect="false"
              maxLength="20"
              class="search-box">
   </SearchBar>
+  <Button text="Create"
+          [nsRouterLink]="['/users', 'new']"
+          class="btn btn-primary btn-rounded-lg">
+  </Button>
   <ListView height="100%"
             [items]="users$ | async"
             class="list-group">

@@ -6,6 +6,10 @@
 Label {
   font-size: 20;
   padding: 10;
+
+  &.text-danger {
+    text-align: center;
+  }
 }
 
 Button {

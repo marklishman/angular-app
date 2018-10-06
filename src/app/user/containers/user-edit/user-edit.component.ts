@@ -54,15 +54,23 @@ export class UserEditComponent implements OnInit {
   onSubmit(): void {
     const userData: UserData = Object.assign({}, this.userForm.value, {id: this.userId });
     const user = new User(userData);
-
-    // TODO refactor this
-    const route = this.platformFeatures.isMobile() ?
-      ['/users', this.userId] :
-      ['/users'];
+    const route = ['/users'];
 
     this.userService.saveUser$(user)
       .subscribe(
-        () => this.router.navigate(route)
+        (savedUser) => {
+          if (this.platformFeatures.isMobile()) {
+
+            // ----------------------------------
+            // Only because user is not actually
+            // saved when using JSONPlaceholder
+            (<any>savedUser).id = 10;
+            // ----------------------------------
+
+            route.push(savedUser.id.toString());
+          }
+          this.router.navigate(route);
+        }
       );
   }
 

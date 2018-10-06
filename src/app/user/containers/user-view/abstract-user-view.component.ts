@@ -14,7 +14,6 @@ export abstract class AbstractUserViewComponent implements OnInit {
                         protected route: ActivatedRoute) {}
 
   ngOnInit() {
-    // TODO this uses a snapshot. Should we be using this.route.queryParams.subscribe instead?
     const userId = +this.route.snapshot.paramMap.get('userId');
     this.user$ = this.userService.getUser$(userId);
   }

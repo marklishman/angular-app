@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-
-import { confirm } from 'tns-core-modules/ui/dialogs';
-import { AbstractUserViewComponent } from './abstract-user-view.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { confirm } from 'tns-core-modules/ui/dialogs';
+
+import { AbstractUserViewComponent } from './abstract-user-view.component';
 import { UserService } from '../../services/user.service';
 
 @Component({

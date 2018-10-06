@@ -6,8 +6,8 @@ export interface UserDto {
   name: string;
   username: string;
   email: string;
-  address: AddressDto;
+  address?: AddressDto;
   phone: string;
   website: string;
-  company: CompanyDto;
+  company?: CompanyDto;
 }

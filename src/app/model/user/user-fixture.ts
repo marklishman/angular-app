@@ -3,6 +3,15 @@ import { User } from './user';
 import * as companyFixture from '../../model/company/company-fixture';
 import * as addressFixture from '../../model/address/address-fixture';
 
+export const partialUserDto: UserDto = {
+  id: 1,
+  name: 'Leanne Graham',
+  username: 'Bret',
+  email: 'Sincere@april.biz',
+  phone: '1-770-736-8031 x56442',
+  website: 'hildegard.org',
+};
+
 export const firstUserDto: UserDto = {
   id: 1,
   name: 'Leanne Graham',

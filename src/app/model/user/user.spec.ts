@@ -8,31 +8,46 @@ describe('User', () => {
 
   describe('fromDto', () => {
 
+    describe('full DTO object', () => {
 
-    beforeEach(() => {
-      user = User.fromDto(userFixture.firstUserDto);
+      beforeEach(() => {
+        user = User.fromDto(userFixture.firstUserDto);
+      });
+
+      it('should map user data with same property names', () => {
+        expect(user.id).toEqual(userFixture.firstUserDto.id);
+        expect(user.email).toEqual(userFixture.firstUserDto.email);
+        expect(user.phone).toEqual(userFixture.firstUserDto.phone);
+        expect(user.website).toEqual(userFixture.firstUserDto.website);
+      });
+
+      it('should remove unwanted property names', () => {
+        expect((<any>user).username).toBeUndefined();
+        expect((<any>user).name).toBeUndefined();
+      });
+
+      it('should rename property names', () => {
+        expect(user.userName).toBe(userFixture.firstUserDto.username);
+        expect(user.fullName).toBe(userFixture.firstUserDto.name);
+      });
+
+      it('should create real objects for nested objects if they exist', () => {
+        expect(user.address).toEqual(userFixture.firstUser.address);
+        expect(user.company).toEqual(userFixture.firstUser.company);
+      });
     });
 
-    it('should map user data with same property names', () => {
-      expect(user.id).toEqual(userFixture.firstUserDto.id);
-      expect(user.email).toEqual(userFixture.firstUserDto.email);
-      expect(user.phone).toEqual(userFixture.firstUserDto.phone);
-      expect(user.website).toEqual(userFixture.firstUserDto.website);
+    it('should not include nested objects if they do not exist', () => {
+
+      user = User.fromDto(userFixture.partialUserDto);
+
+      expect(user.address).toBeUndefined();
+      expect(user.company).toBeUndefined();
     });
 
-    it('should remove unwanted property names', () => {
-      expect((<any>user).username).toBeUndefined();
-      expect((<any>user).name).toBeUndefined();
-    });
 
-    it('should rename property names', () => {
-      expect(user.userName).toBe(userFixture.firstUserDto.username);
-      expect(user.fullName).toBe(userFixture.firstUserDto.name);
-    });
-
-    it('should create real objects for nested objects', () => {
-      expect(user.address).toEqual(userFixture.firstUser.address);
-      expect(user.company).toEqual(userFixture.firstUser.company);
+    it('should return undefined if DTO is undefined', () => {
+      expect(User.fromDto(undefined)).toBeUndefined();
     });
   });
 

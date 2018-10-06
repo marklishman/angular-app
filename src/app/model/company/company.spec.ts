@@ -12,5 +12,9 @@ describe('Company', () => {
       expect(company.info).toEqual(companyFixture.firstCompanyDto.bs);
     });
 
+    it('should return undefined if DTO is undefined', () => {
+      expect(Company.fromDto(undefined)).toBeUndefined();
+    });
+
   });
 });

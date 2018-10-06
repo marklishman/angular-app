@@ -14,6 +14,7 @@ export class GeoLocation {
   }
 
   static fromDto(geoLocationDto: GeoLocationDto): GeoLocation {
+    if (!geoLocationDto) { return }
     return new GeoLocation({
       lat: parseFloat(geoLocationDto.lat),
       lng: parseFloat(geoLocationDto.lng)

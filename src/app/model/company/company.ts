@@ -15,6 +15,7 @@ export class Company {
   }
 
   static fromDto(companyDto: CompanyDto): Company {
+    if (!companyDto) { return }
     return new Company({
       name: companyDto.name,
       catchPhrase: companyDto.catchPhrase,

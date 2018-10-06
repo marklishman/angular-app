@@ -8,10 +8,10 @@ export interface UserData {
   readonly userName: string;
   readonly fullName: string;
   readonly email: string;
-  readonly address: Address;
+  readonly address?: Address;
   readonly phone: string;
   readonly website: string;
-  readonly company: Company;
+  readonly company?: Company;
 }
 
 // tslint:disable-next-line:no-empty-interface
@@ -27,6 +27,8 @@ export class User {
   }
 
   static fromDto(userDto: UserDto): User {
+    if (!userDto) { return }
+
     // Drop 'username' and 'name'
     const {username, name, ...keep} = userDto;
 

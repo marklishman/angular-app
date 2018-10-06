@@ -12,5 +12,8 @@ describe('GeoLocation', () => {
       expect(geo.lng).toEqual(81.1496);
     });
 
+    it('should return undefined if DTO is undefined', () => {
+      expect(GeoLocation.fromDto(undefined)).toBeUndefined();
+    });
   });
 });

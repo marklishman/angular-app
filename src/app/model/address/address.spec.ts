@@ -19,5 +19,9 @@ describe('Address', () => {
       expect(address.zipcode).toEqual(addressFixture.firstAddressDto.zipcode);
     });
 
+    it('should return undefined if DTO is undefined', () => {
+      expect(Address.fromDto(undefined)).toBeUndefined();
+    });
+
   });
 });

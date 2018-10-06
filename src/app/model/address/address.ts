@@ -18,6 +18,7 @@ export class Address {
   }
 
   static fromDto(addressDto: AddressDto): Address {
+    if (!addressDto) { return }
     const geo = GeoLocation.fromDto(addressDto.geo);
     const data = Object.assign(addressDto, { geo });
     return new Address(data);

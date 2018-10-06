@@ -9,6 +9,7 @@
   </SearchBar>
   <Button text="Create"
           [nsRouterLink]="['/users', 'new']"
+          pageTransition="fade"
           class="btn btn-primary btn-rounded-lg">
   </Button>
   <ListView height="100%"
@@ -18,6 +19,7 @@
       <StackLayout>
         <Label [text]="user.fullName"
                [nsRouterLink]="['/users', user.id]"
+               pageTransition="flip"
                class="user-name">
         </Label>
       </StackLayout>

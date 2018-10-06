@@ -3,7 +3,7 @@
   <ActionBar title="Edit User Details">
     <NavigationButton text="Back"
                       android.systemIcon="ic_menu_back"
-                      [nsRouterLink]="['/users', userId]">
+                      [nsRouterLink]="backRoute()">
     </NavigationButton>
   </ActionBar>
   <GridLayout [formGroup]="userForm" rows="50,50,50,50,50" columns="auto, *">
@@ -22,6 +22,10 @@
          textWrap="true"
          class="text-danger">
   </Label>
-  <Button text="Save" (tap)="onSubmit()" class="btn btn-primary"></Button>
+  <Button text="Save"
+          (tap)="onSubmit()"
+          pageTransition="slide"
+          class="btn btn-primary">
+  </Button>
 </StackLayout>
 

@@ -18,6 +18,14 @@
     <Label text="Website" row="4" col="0"></Label>
     <Label [text]="user.website" row="4" col="1"></Label>
   </GridLayout>
-  <Button text="Edit" [nsRouterLink]="['/users', user.id, 'edit']" class="btn btn-primary btn-rounded-lg"></Button>
-  <Button text="Delete" (tap)="onDelete(user.id)" class="btn btn-outline btn-rounded-lg"></Button>
+  <Button text="Edit"
+          [nsRouterLink]="['/users', user.id, 'edit']"
+          pageTransition="explode"
+          class="btn btn-primary btn-rounded-lg">
+  </Button>
+  <Button text="Delete"
+          (tap)="onDelete(user.id)"
+          pageTransition="curl"
+          class="btn btn-outline btn-rounded-lg">
+  </Button>
 </StackLayout>

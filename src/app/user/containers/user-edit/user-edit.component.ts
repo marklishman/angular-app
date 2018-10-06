@@ -51,6 +51,14 @@ export class UserEditComponent implements OnInit {
       );
   }
 
+  backRoute(): string[] {
+    const route = ['/users'];
+    if (this.userId) {
+      route.push(this.userId.toString());
+    }
+    return route;
+  }
+
   onSubmit(): void {
     const userData: UserData = Object.assign({}, this.userForm.value, {id: this.userId });
     const user = new User(userData);

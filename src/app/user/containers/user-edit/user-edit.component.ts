@@ -54,6 +54,8 @@ export class UserEditComponent implements OnInit {
   onSubmit(): void {
     const userData: UserData = Object.assign({}, this.userForm.value, {id: this.userId });
     const user = new User(userData);
+
+    // TODO refactor this
     const route = this.platformFeatures.isMobile() ?
       ['/users', this.userId] :
       ['/users'];

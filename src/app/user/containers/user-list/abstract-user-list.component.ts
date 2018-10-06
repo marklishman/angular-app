@@ -40,12 +40,4 @@ export abstract class AbstractUserListComponent implements OnInit {
     this.reset$.next('');
   }
 
-  onDelete(id: number): void {
-    if (confirm('Are you sure?')) {
-      this.userService.deleteUser$(id)
-        .subscribe(
-          () => this.router.navigate(['/users'])
-        );
-    }
-  }
 }

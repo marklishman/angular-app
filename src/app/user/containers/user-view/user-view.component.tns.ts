@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { confirm } from 'tns-core-modules/ui/dialogs';
 import { AbstractUserViewComponent } from './abstract-user-view.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
@@ -14,5 +15,14 @@ export class UserViewComponent extends AbstractUserViewComponent {
               router: Router,
               route: ActivatedRoute) {
     super(userService, router, route);
+  }
+
+  onDelete(id: number): void {
+    confirm('Are you sure?').then((result: boolean) => {
+      this.userService.deleteUser$(id)
+        .subscribe(
+          () => this.router.navigate(['/users'])
+        );
+    });
   }
 }

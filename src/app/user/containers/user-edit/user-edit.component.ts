@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
 import { UserService } from '../../services/user.service';
 import { User, UserData } from '../../../model/user/user';
+import { PlatformFeatures } from '../../../common/platform/PlatformFeatures';
+import { PLATFORM_FEATURES } from '../../../app.module.shared';
 
 @Component({
   templateUrl: './user-edit.component.html',
@@ -24,7 +26,8 @@ export class UserEditComponent implements OnInit {
   constructor(private userService: UserService,
               private router: Router,
               private route: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              @Inject(PLATFORM_FEATURES) private platformFeatures: PlatformFeatures) {
   }
 
   ngOnInit() {
@@ -51,9 +54,13 @@ export class UserEditComponent implements OnInit {
   onSubmit(): void {
     const userData: UserData = Object.assign({}, this.userForm.value, {id: this.userId });
     const user = new User(userData);
+    const route = this.platformFeatures.isMobile() ?
+      ['/users', this.userId] :
+      ['/users'];
+
     this.userService.saveUser$(user)
       .subscribe(
-        () => this.router.navigate(['/users'])
+        () => this.router.navigate(route)
       );
   }
 

@@ -10,8 +10,8 @@ import { UserViewComponent } from './user/containers/user-view/user-view.compone
 import { UserEditComponent } from './user/containers/user-edit/user-edit.component';
 import { UserHttpService } from './user/http/user-http.service';
 import { UserService } from './user/services/user.service';
-
-// TODO common values using spread
+import { WebPlatformFeatures } from './common/platform/WebPlatformFeatures';
+import { PLATFORM_FEATURES } from './app.module.shared';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,11 @@ import { UserService } from './user/services/user.service';
   ],
   providers: [
     UserHttpService,
-    UserService
+    UserService,
+    {
+      provide: PLATFORM_FEATURES,
+      useClass: WebPlatformFeatures
+    }
   ],
   bootstrap: [AppComponent]
 })

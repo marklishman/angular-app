@@ -11,6 +11,8 @@ import { UserListComponent } from './user/containers/user-list/user-list.compone
 import { UserEditComponent } from './user/containers/user-edit/user-edit.component';
 import { UserViewComponent } from './user/containers/user-view/user-view.component';
 import { UserService } from './user/services/user.service';
+import { MobilePlatformFeatures } from './common/platform/MobilePlatformFeatures';
+import { PLATFORM_FEATURES } from './app.module.shared';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,11 @@ import { UserService } from './user/services/user.service';
   ],
   providers: [
     UserHttpService,
-    UserService
+    UserService,
+    {
+      provide: PLATFORM_FEATURES,
+      useClass: MobilePlatformFeatures
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]

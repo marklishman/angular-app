@@ -6,6 +6,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { UserService } from '../../services/user.service';
 import { User } from '../../../model/user/user';
+import { lowerCaseTrim } from '../../../common/rxjs/operators';
 
 export abstract class AbstractUserListComponent implements OnInit {
 
@@ -23,16 +24,15 @@ export abstract class AbstractUserListComponent implements OnInit {
     const searchText$ = this.search.valueChanges
       .pipe(
         debounceTime(500),
+        lowerCaseTrim(),
         distinctUntilChanged(),
-        map(searchText => searchText.trim().toLowerCase()),
       );
-
     const filterTrigger$ = merge(searchText$, this.reset$);
 
     this.users$ = combineLatest(userData$, filterTrigger$)
       .pipe(
         map(([users, searchText]) =>
-          users.filter(user => user.fullName.toLowerCase().includes(searchText.toLowerCase()))
+          users.filter(user => user.fullName.toLowerCase().includes(searchText))
         ));
   }
 

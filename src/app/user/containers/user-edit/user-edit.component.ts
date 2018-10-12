@@ -13,7 +13,7 @@ import { PLATFORM_FEATURES } from '../../../app.module.shared';
 })
 export class UserEditComponent implements OnInit {
 
-  private userId: number | undefined;
+  userId: number | undefined;
 
   userForm = this.formBuilder.group({
     userName: [''],

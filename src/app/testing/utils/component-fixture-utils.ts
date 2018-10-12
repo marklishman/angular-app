@@ -1,6 +1,7 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+
 import { RouterLinkDirectiveStub } from './router-link-directive-stub';
 
 export class ComponentFixtureUtils<T> {

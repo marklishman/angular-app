@@ -14,7 +14,6 @@ export class ComponentFixtureUtils<T> {
 
   // click
 
-  // TODO return type
   click(css: string): string | [any] {
     const el = this.getElement(css) as HTMLElement;
     el.click();

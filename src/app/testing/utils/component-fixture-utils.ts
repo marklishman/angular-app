@@ -47,4 +47,18 @@ export class ComponentFixtureUtils<T> {
     const el = this.getElement(css) as HTMLElement;
     el.click();
   }
+
+  clickButtonWithText(text: string, index = 0): void {
+    this.clickElementWithText('button', text, index);
+  }
+
+  clickLinkWithText(text: string, index = 0): void {
+    this.clickElementWithText('a', text, index);
+  }
+
+  clickElementWithText(css: string, text: string, index = 0): void {
+    this.getAllElements(css)
+      .filter( el => el.innerText === text)[index].click();
+  }
+
 }

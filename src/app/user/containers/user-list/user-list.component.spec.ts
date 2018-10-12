@@ -13,8 +13,11 @@ import createSpyObj = jasmine.createSpyObj;
 
 describe('UserListComponent', () => {
 
+  const USER_ID = 123;
+
   let component: UserListComponent;
   let userService: UserService;
+  let router: Router;
 
   beforeEach(() => {
     userService = createSpyObj<UserService>('userService', {
@@ -23,21 +26,33 @@ describe('UserListComponent', () => {
       'saveUser$': of(userFixture.firstUser),
       'deleteUser$': of(userFixture.firstUser)
     });
+    router = createSpyObj<Router>('router', ['navigate']);
   });
 
   describe('Class', () => {
 
     beforeEach(() => {
-      // TODO include router
       component = new UserListComponent(
         userService,
-        null
+        router
       );
       component.ngOnInit();
     });
 
-    it('should not delete the user if the confirmation dialog is cancelled', () => {
-      // TODO do this!
+    describe('onDelete', () => {
+      it('should not delete user if dialog is cancelled', () => {
+        spyOn(window, 'confirm').and.returnValue(false);
+        component.onDelete(USER_ID);
+        expect(userService.deleteUser$).not.toHaveBeenCalled();
+        expect(router.navigate).not.toHaveBeenCalled();
+      });
+
+      it('should delete the user and navigate to user list if dialog is confirmed', () => {
+        spyOn(window, 'confirm').and.returnValue(true);
+        component.onDelete(USER_ID);
+        expect(userService.deleteUser$).toHaveBeenCalledWith(USER_ID);
+        expect(router.navigate).toHaveBeenCalledWith(['/users'])
+      });
     });
   });
 
@@ -144,7 +159,7 @@ describe('UserListComponent', () => {
           'Ervin Howell'
         ]);
 
-        fixtureUtils.click('#t-clear');
+        fixtureUtils.clickButtonWithText('clear');
         tick();
         fixture.detectChanges();
 
@@ -155,10 +170,18 @@ describe('UserListComponent', () => {
       }));
     });
 
+    describe('delete', () => {
+      it('should call the correct method with the correct argument when delete link is clicked', () => {
+        spyOn(component, 'onDelete');
+        fixtureUtils.click('ul > li:nth-child(1) > a:nth-child(3)');
+        expect(component.onDelete).toHaveBeenCalledWith(1);
+      });
+    });
+
     describe('navigation', () => {
       // TODO test navigation
       xit('should go to the Add User page', () => {
-        fixtureUtils.click('#t-add');
+        fixtureUtils.clickLinkWithText('Add');
         expect(fixtureUtils.getElementText('h1')).toBe('Add User');
       });
     });

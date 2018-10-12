@@ -4,7 +4,7 @@
        [formControl]="search"
        placeholder="search"
        id="t-search-box">
-<button (click)="resetSearch()" id="t-clear">clear</button>
+<button (click)="resetSearch()">clear</button>
 
 <ul>
   <li *ngFor="let user of users$ | async">

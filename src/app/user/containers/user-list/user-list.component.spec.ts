@@ -10,6 +10,7 @@ import { UserService } from '../../services/user.service';
 import { ComponentFixtureUtils } from '../../../testing/utils/component-fixture-utils';
 import * as userFixture from '../../../model/user/user-fixture';
 import createSpyObj = jasmine.createSpyObj;
+import { RouterLinkDirectiveStub } from '../../../testing/utils/router-link-directive-stub';
 
 describe('UserListComponent', () => {
 
@@ -70,7 +71,8 @@ describe('UserListComponent', () => {
           ReactiveFormsModule
         ],
         declarations: [
-          UserListComponent
+          UserListComponent,
+          RouterLinkDirectiveStub
         ],
         providers: [
           { provide: UserService, useValue : userService },
@@ -143,7 +145,8 @@ describe('UserListComponent', () => {
           users => {
             expect(users.length).toBe(1);
             done();
-          }
+          },
+          () => fail('error not expected')
         )
       });
     });
@@ -179,10 +182,19 @@ describe('UserListComponent', () => {
     });
 
     describe('navigation', () => {
-      // TODO test navigation
-      xit('should go to the Add User page', () => {
-        fixtureUtils.clickLinkWithText('Add');
-        expect(fixtureUtils.getElementText('h1')).toBe('Add User');
+      it('should go to the Add User page', () => {
+        const route = fixtureUtils.clickLinkWithText('Add');
+        expect(route).toBe('/users/new');
+      });
+
+      it('should go to the Change User page for first user', () => {
+        const route = fixtureUtils.click('ul > li:nth-child(1) > a:nth-child(2)');
+        expect(route).toEqual(['/users', 1, 'edit']);
+      });
+
+      it('should go to the Change User page for second user', () => {
+        const route = fixtureUtils.click('ul > li:nth-child(2) > a:nth-child(2)');
+        expect(route).toEqual(['/users', 2, 'edit']);
       });
     });
   });

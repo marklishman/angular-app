@@ -56,6 +56,7 @@ describe('UserEditComponent', () => {
     fixture.detectChanges();
   });
 
+  // TODO ignored test
   xdescribe('ngOnInit', () => {
     it('should get the user for the specified id', () => {
       expect(userService.getUser$).toHaveBeenCalledWith(USER_ID);
@@ -63,5 +64,7 @@ describe('UserEditComponent', () => {
   });
 
   // TODO check the values on the page
+  // TODO DispatchEvent()
+  // https://angular.io/guide/testing#change-an-input-value-with-dispatchevent
 
 });

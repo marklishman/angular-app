@@ -22,7 +22,6 @@ export class UserListComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-
     const userData$ = this.userService.getUserList$();
 
     const searchText$ = this.search.valueChanges
@@ -37,7 +36,8 @@ export class UserListComponent implements OnInit {
       .pipe(
         map(([users, searchText]) =>
           users.filter(user => user.fullName.toLowerCase().includes(searchText))
-        ));
+        ),
+      );
   }
 
   resetSearch(): void {

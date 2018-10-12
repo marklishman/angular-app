@@ -11,7 +11,7 @@ import { User, UserData } from '../../../model/user/user';
 })
 export class UserEditComponent implements OnInit {
 
-  private userId: number | undefined;
+  userId: number | undefined;
 
   userForm = this.formBuilder.group({
     userName: [''],

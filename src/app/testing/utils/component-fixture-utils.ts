@@ -10,43 +10,41 @@ export class ComponentFixtureUtils<T> {
     this.debugEl = componentFixture.debugElement;
   }
 
-  getAllElementsByCss(css: string): HTMLElement[] {
+  // get elements
+
+  getAllElements(css: string): HTMLElement[] {
     return this.debugEl.queryAll(By.css(css))
       .map(debugElement => debugElement.nativeElement);
   }
 
-  getElementByCss(css: string, index = 0): HTMLElement {
-    return this.debugEl.queryAll(By.css(css))
-      .map(debugElement => debugElement.nativeElement)[index];
+  getElement(css: string, index = 0): HTMLElement {
+    return this.getAllElements(css)[index];
   }
 
-  getAllElementTextByCss(css: string): string[] {
-    return this.getAllElementsByCss(css)
+  // get element text
+
+  getAllElementText(css: string): string[] {
+    return this.getAllElements(css)
       .map((el: HTMLElement) => el.textContent);
   }
 
-  getElementTextByCss(css: string, index = 0): string {
-    return this.getElementByCss(css, index).textContent;
+  getElementText(css: string, index = 0): string {
+    return this.getAllElementText(css)[index];
   }
 
-  getTableRowText(tableId: string): string[][] {
-    const table = this.getElementByCss('#' + tableId);
-    const rows = table.getElementsByClassName('mat-row');
-    const rowText: string[][] = [];
-    for (let i = 0; i < rows.length; i++) {
-      const cells = rows[i].getElementsByClassName('mat-cell');
-      const cellText = this.getCellTextForRow(cells);
-      rowText.push(cellText);
-    }
-    return rowText;
+  // set value
+
+  setElementValue(css: string, value: string): void {
+    const el = this.getElement(css) as HTMLInputElement;
+    el.value = value;
+    el.dispatchEvent(new Event('input'));
+    this.componentFixture.detectChanges();
   }
 
-  getCellTextForRow(cells: NodeListOf<Element>): string[] {
-    const cellText: string[] = [];
-    for (let i = 0; i < cells.length; i++) {
-      cellText.push(cells.item(i).textContent);
-    }
-    return cellText;
-  }
+  // click
 
+  click(css: string): void {
+    const el = this.getElement(css) as HTMLElement;
+    el.click();
+  }
 }

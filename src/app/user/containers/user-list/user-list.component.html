@@ -1,7 +1,10 @@
+<h1>Users</h1>
+
 <input type="text"
        [formControl]="search"
-       placeholder="search">
-<button (click)="resetSearch()">clear</button>
+       placeholder="search"
+       id="t-search-box">
+<button (click)="resetSearch()" id="t-clear">clear</button>
 
 <ul>
   <li *ngFor="let user of users$ | async">
@@ -11,5 +14,5 @@
   </li>
 </ul>
 
-<a href="/users/new">Add</a>
+<a href="/users/new" id="t-add">Add</a>
 

@@ -17,4 +17,9 @@ export class UserListComponent extends AbstractUserListComponent {
     super(userService, router);
     page.actionBarHidden = true;
   }
+
+  // TODO unit test
+  addUser(event: any): void {
+    this.router.navigate(['/users/new']);
+  }
 }

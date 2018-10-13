@@ -13,6 +13,7 @@ import { UserViewComponent } from './user/containers/user-view/user-view.compone
 import { UserService } from './user/services/user.service';
 import { MobilePlatformFeatures } from './common/platform/MobilePlatformFeatures';
 import { PLATFORM_FEATURES } from './app.module.shared';
+import { FloatingButtonComponent } from './common/components/floating-button/floating-button.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { PLATFORM_FEATURES } from './app.module.shared';
     UserListComponent,
     UserViewComponent,
     UserEditComponent,
+    FloatingButtonComponent,
   ],
   imports: [
     NativeScriptModule,

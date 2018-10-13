@@ -12,6 +12,9 @@ import { UserHttpService } from './user/http/user-http.service';
 import { UserService } from './user/services/user.service';
 import { WebPlatformFeatures } from './common/platform/WebPlatformFeatures';
 import { PLATFORM_FEATURES } from './app.module.shared';
+import { FloatingButtonComponent } from './common/components/floating-button/floating-button.component';
+
+// TODO fab here?
 
 @NgModule({
   declarations: [
@@ -19,6 +22,7 @@ import { PLATFORM_FEATURES } from './app.module.shared';
     UserListComponent,
     UserViewComponent,
     UserEditComponent,
+    FloatingButtonComponent,
   ],
   imports: [
     BrowserModule,

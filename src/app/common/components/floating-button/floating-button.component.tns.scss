@@ -1,0 +1,28 @@
+
+
+.float-btn {
+  background-color: #30bcff;
+  border-radius: 28;
+  height: 56;
+  width: 56;
+  text-align: center;
+  vertical-align: middle;
+
+  &.down {
+    background-color: red;
+    animation-name: down;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes down {
+  from { background-color: #30bcff; }
+  to { background-color: purple; }
+}
+
+.float-btn-text {
+  color: white;
+  font-size: 36;
+  margin-top: -3;
+}

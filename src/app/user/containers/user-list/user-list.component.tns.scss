@@ -3,6 +3,11 @@ SearchBar {
   font-size: 22;
 }
 
+ScrollView {
+  height: 100%;
+  width: 100%;
+}
+
 .user-name {
   padding: 15;
   font-size: 24;
@@ -10,4 +15,9 @@ SearchBar {
 
 Button {
   font-size: 20;
+}
+
+.float-btn-container {
+  margin-top: 85%;
+  margin-left: 80%;
 }

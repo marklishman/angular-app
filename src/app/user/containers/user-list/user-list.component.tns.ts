@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Page } from 'tns-core-modules/ui/page';
 import { SearchBar } from "tns-core-modules/ui/search-bar";
+import * as utils from "tns-core-modules/utils/utils";
 
 import { UserService } from '../../services/user.service';
 import { AbstractUserListComponent } from './abstract-user-list.component';
@@ -26,6 +27,7 @@ export class UserListComponent extends AbstractUserListComponent implements Afte
     this.searchBar = this.searchBarEl.nativeElement;
     // TODO couldn't get this to work
     this.searchBar.dismissSoftInput();
+    utils.ad.dismissSoftInput();
   }
 
   // TODO unit test

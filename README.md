@@ -2,7 +2,7 @@
 
 An angular application which maintains test data from JSONPlaceholder.
 
-# Repositories
+# Http Crud Service
 
 ~~~typescript
 @Injectable({

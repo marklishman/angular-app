@@ -2,11 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { HttpCrudOperations } from './http-crud-operations';
 import { Identifiable } from '../model/identifiable';
 import { HttpService } from './http.service';
+import { HttpCrudOperations } from './http-crud-operations';
 
-export abstract class HttpCrudService<T extends Identifiable<ID>, ID>
+/**
+ * Default implementation of an Http Crud class.
+ * Equivalent to CrudRepository in Spring Data.
+ */
+export abstract class DefaultHttpCrudService<T extends Identifiable<ID>, ID>
   extends HttpService
   implements HttpCrudOperations<T, ID> {
 

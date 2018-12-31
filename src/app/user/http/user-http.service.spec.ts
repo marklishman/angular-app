@@ -1,6 +1,6 @@
 import { UserHttpService } from './user-http.service';
 
-describe('HttpCrudService', () => {
+describe('DefaultHttpCrudService', () => {
 
   it('should instantiate the vehicle http service with the correct entity name', () => {
     const userHttpService = new UserHttpService(null);

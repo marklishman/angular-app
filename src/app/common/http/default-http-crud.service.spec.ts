@@ -3,12 +3,12 @@ import { TestBed } from '@angular/core/testing';
 import { Injectable } from '@angular/core';
 import { of, throwError } from 'rxjs';
 
-import { HttpCrudService } from './http-crud.service';
+import { DefaultHttpCrudService } from './default-http-crud.service';
 import { Identifiable } from '../model/identifiable';
 import createSpyObj = jasmine.createSpyObj;
 import Spy = jasmine.Spy;
 
-describe('HttpCrudService', () => {
+describe('DefaultHttpCrudService', () => {
 
   // types
 
@@ -20,7 +20,7 @@ describe('HttpCrudService', () => {
   @Injectable({
     providedIn: 'root'
   })
-  class TestHttpCrudService extends HttpCrudService<TestDto, number> {
+  class TestHttpCrudService extends DefaultHttpCrudService<TestDto, number> {
     constructor(http: HttpClient) {
       super('test', http);
     }

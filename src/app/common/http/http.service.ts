@@ -1,6 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 
+/**
+ * Base Http class.
+ * Allows custom methods to be included on a sub-class.
+ * Equivalent to Repository in Spring Data.
+ */
 export abstract class HttpService {
 
   // protected because it must be implemented on subclass for Angular DI

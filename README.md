@@ -159,3 +159,12 @@ static fromDto(userDto: UserDto): User {
   return new User(data);
 }
 ```
+
+# t- prefix
+
+The `t-` prefix on HTML ids and classes indicates that these are only used during testing.
+
+    <input type="text"
+           [formControl]="search"
+           placeholder="search"
+           id="t-search-box">

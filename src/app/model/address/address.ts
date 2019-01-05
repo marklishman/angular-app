@@ -9,7 +9,6 @@ export interface AddressData {
   readonly geo: GeoLocation;
 }
 
-// tslint:disable-next-line:no-empty-interface
 export interface Address extends AddressData {}
 
 export class Address {

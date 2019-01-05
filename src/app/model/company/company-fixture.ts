@@ -16,11 +16,11 @@ export const secondCompanyDto: CompanyDto = {
 export const firstCompany = new Company({
     name: 'Romaguera-Crona',
     catchPhrase: 'Multi-layered client-server neural-net',
-    info: 'harness real-time e-markets'
+    bs: 'harness real-time e-markets'
 });
 
 export const secondCompany = new Company({
   name: 'Deckow-Crist',
   catchPhrase: 'Proactive didactic contingency',
-  info: 'synergize scalable supply-chains'
+  bs: 'synergize scalable supply-chains'
 });

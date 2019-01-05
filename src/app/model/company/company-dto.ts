@@ -1,6 +1,4 @@
+import { CompanyData } from './company';
 
-export interface CompanyDto {
-  name: string;
-  catchPhrase: string;
-  bs: string;
-}
+// DTO converter: the DTO and Data structures are the same
+export interface CompanyDto extends CompanyData {}

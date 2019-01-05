@@ -3,10 +3,9 @@ import { CompanyDto } from './company-dto';
 export interface CompanyData {
   readonly name: string;
   readonly catchPhrase: string;
-  readonly info: string;
+  readonly bs: string;
 }
 
-// tslint:disable-next-line:no-empty-interface
 export interface Company extends CompanyData {}
 
 export class Company {
@@ -16,10 +15,6 @@ export class Company {
 
   static fromDto(companyDto: CompanyDto): Company {
     if (!companyDto) { return }
-    return new Company({
-      name: companyDto.name,
-      catchPhrase: companyDto.catchPhrase,
-      info: companyDto.bs,
-    });
+    return new Company(companyDto);
   }
 }

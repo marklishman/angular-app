@@ -5,7 +5,6 @@ export interface GeoLocationData {
   readonly lng: number;
 }
 
-// tslint:disable-next-line:no-empty-interface
 export interface GeoLocation extends GeoLocationData {}
 
 export class GeoLocation {
@@ -16,6 +15,7 @@ export class GeoLocation {
   static fromDto(geoLocationDto: GeoLocationDto): GeoLocation {
     if (!geoLocationDto) { return }
     return new GeoLocation({
+      //  DTO converter: change the data type
       lat: parseFloat(geoLocationDto.lat),
       lng: parseFloat(geoLocationDto.lng)
     });
